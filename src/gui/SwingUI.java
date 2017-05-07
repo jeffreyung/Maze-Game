@@ -1,37 +1,49 @@
 package gui;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
-public class SwingUI {
+@SuppressWarnings("serial")
+public class SwingUI extends JFrame {
 
-	private JFrame currentFrame;
+	public final static String GAME_NAME = "COMP2911 Project";
+	
+	private JPanel panel;
 	
 	public SwingUI() {
+		this.setPanel(new StartPanel(this));
 		this.init();
 	}
 	
-	private void init() {
+	public void init() {
 		try {
 			JPopupMenu.setDefaultLightWeightPopupEnabled(false);
-			this.setCurrentFrame(new StartScreen());
+			JFrame.setDefaultLookAndFeelDecorated(true);
+			this.setLayout(new BorderLayout());
+			this.setTitle(GAME_NAME);
+			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			this.setPreferredSize(new Dimension(800, 500));
+			this.getPanel().setLayout(new GridLayout(4, 0));
+			this.getContentPane().add(this.getPanel());
+			this.pack();
+			this.setVisible(true);
+			this.setResizable(false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	/**
-	 * @return the currentFrame
-	 */
-	public JFrame getCurrentFrame() {
-		return currentFrame;
+	public JPanel getPanel() {
+		return panel;
 	}
 
-	/**
-	 * @param currentFrame to set
-	 */
-	public void setCurrentFrame(JFrame currentFrame) {
-		this.currentFrame = currentFrame;
+	public void setPanel(JPanel panel) {
+		this.panel = panel;
 	}
 	
 }
