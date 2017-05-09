@@ -4,6 +4,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 
+import comp2911.GameEngine;
 import comp2911.gui.SwingUI;
 import comp2911.gui.UserInput;
 
@@ -14,14 +15,19 @@ import comp2911.gui.UserInput;
 public class GamePanel extends JPanel {
 
 	/**
-	 * Swing user input.
+	 * The swing user input.
 	 */
 	private SwingUI swingUI;
 	
 	/**
-	 * User input.
+	 * The user input.
 	 */
 	private KeyListener userInput;
+
+	/**
+	 * The game engine.
+	 */
+	private GameEngine gameEngine;
 	
 	/**
 	 * The constructor of the StartScreen class
@@ -29,7 +35,8 @@ public class GamePanel extends JPanel {
 	 */
 	public GamePanel(SwingUI swingUI) {
 		this.swingUI = swingUI;
-		this.userInput = new UserInput(this.swingUI.getGameEngine());
+		this.gameEngine = new GameEngine(this.swingUI);
+		this.userInput = new UserInput(this.gameEngine);
 		this.init();
 		this.setVisible(true);
 	}
