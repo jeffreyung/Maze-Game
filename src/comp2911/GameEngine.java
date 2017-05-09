@@ -31,16 +31,16 @@ public class GameEngine {
 	private ArrayList<ArrayList<Character>> board;
 	
 	/**
-	 * Constructs a new GameEngine and initializes the variables
+	 * Constructs a new GameEngine and initializes the variables.
 	 */
-	public GameEngine() {
-		this.swingUI = new SwingUI(this);
+	public GameEngine(SwingUI swingUI) {
+		this.swingUI = swingUI;
 		this.mapGenerator = new comp2911.game.MapGenerator(GameEngine.BOARD_SIZE);
 		this.board = this.mapGenerator.createBoard();
 	}
 	
 	/**
-	 * Sends the user input to the map
+	 * Sends the user input to the map.
 	 * @param input 
 	 */
 	public void sendUserDirection(Direction dir) {
@@ -49,9 +49,11 @@ public class GameEngine {
 		 * dir == Direction.DOWN
 		 * dir == Direction.LEFT
 		 * dir == DIRECTION.RIGHT
+		 * this.board = ???;
 		 */
 		if(Constants.DEBUG_MODE)
 			Logger.getLogger(UserInput.class.getName()).info("Moving...");
+		this.swingUI.updateInterface(this.board);
 	}
 	
 }
