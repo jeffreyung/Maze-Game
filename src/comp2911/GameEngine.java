@@ -1,5 +1,6 @@
 package comp2911;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import comp2911.game.Direction;
@@ -25,11 +26,17 @@ public class GameEngine {
 	private SwingUI swingUI;
 	
 	/**
+	 * The 2-Dimensional board.
+	 */
+	private ArrayList<ArrayList<Character>> board;
+	
+	/**
 	 * Constructs a new GameEngine and initializes the variables
 	 */
 	public GameEngine() {
 		this.swingUI = new SwingUI(this);
 		this.mapGenerator = new comp2911.game.MapGenerator(GameEngine.BOARD_SIZE);
+		this.board = this.mapGenerator.createBoard();
 	}
 	
 	/**
@@ -43,7 +50,7 @@ public class GameEngine {
 		 * dir == Direction.LEFT
 		 * dir == DIRECTION.RIGHT
 		 */
-		if (Constants.DEBUG_MODE)
+		if(Constants.DEBUG_MODE)
 			Logger.getLogger(UserInput.class.getName()).info("Moving...");
 	}
 	
