@@ -1,5 +1,7 @@
 package comp2911;
 
+import comp2911.gui.SwingUI;
+
 public class Main {
 	
 	/**
@@ -7,7 +9,7 @@ public class Main {
 	 * @param args initial inputs from the controller
 	 */
 	public static void main(String[] args) {
-		new GameEngine();
+		new SwingUI();
 	}
 
 }
