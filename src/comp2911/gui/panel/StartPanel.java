@@ -49,7 +49,7 @@ public class StartPanel extends JPanel {
 		this.addButton("Rules", "rules");
 		this.addButton("Scoreboard", "scoreboard");
 		this.addButton("Exit", "exit");
-		for (JButton button : buttons) {
+		for(JButton button : buttons) {
 			button.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent event) {
@@ -78,7 +78,7 @@ public class StartPanel extends JPanel {
 			System.exit(0);
 			break;
 		default:
-			if (Constants.DEBUG_MODE)
+			if(Constants.DEBUG_MODE)
 				Logger.getLogger(StartPanel.class.getName()).info("Unhandled button for: " + name);
 			break;
 		}
