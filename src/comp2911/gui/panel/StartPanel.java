@@ -1,6 +1,7 @@
 package comp2911.gui.panel;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -66,13 +67,13 @@ public class StartPanel extends JPanel {
 	public void handleButton(String name) {
 		switch (name) {
 		case "start_game":
-			this.switchPanel(new GamePanel(this.swingUI));
+			this.swingUI.switchPanel(new GamePanel(this.swingUI));
 			break;
 		case "rules":
-			this.switchPanel(new RulesPanel(this.swingUI));
+			this.swingUI.switchPanel(new RulesPanel(this.swingUI));
 			break;
 		case "scoreboard":
-			this.switchPanel(new ScoreboardPanel(this.swingUI));
+			this.swingUI.switchPanel(new ScoreboardPanel(this.swingUI));
 			break;
 		case "exit":
 			System.exit(0);
@@ -83,19 +84,7 @@ public class StartPanel extends JPanel {
 			break;
 		}
 	}
-	
-	/**
-	 * Switches the panel.
-	 * @param panel to be switched to.
-	 */
-	public void switchPanel(JPanel panel) {
-		this.swingUI.getContentPane().remove(this);
-		this.swingUI.setPanel(panel);
-		this.swingUI.init();
-		this.repaint();
-		this.revalidate();
-	}
-	
+
 	/**
 	 * Adds a button to the buttons list.
 	 * @param name of the button to be added.
