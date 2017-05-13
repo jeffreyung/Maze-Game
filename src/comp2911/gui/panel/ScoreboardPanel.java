@@ -4,6 +4,9 @@ import javax.swing.JPanel;
 
 import comp2911.gui.SwingUI;
 
+/**
+ * @author Jeffrey Ung and Jamison Tsai
+ */
 @SuppressWarnings("serial")
 public class ScoreboardPanel extends JPanel {
 
