@@ -48,7 +48,7 @@ public class GameEngine {
 		 */
 		if(Constants.DEBUG_MODE)
 			Logger.getLogger(UserInput.class.getName()).info("Moving...");
-		this.swingUI.updateInterface(this.board);
+		this.swingUI.updateInterface();
 	}
 	
 	/**
