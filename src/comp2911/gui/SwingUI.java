@@ -24,15 +24,39 @@ public class SwingUI extends JFrame {
 	private JPanel panel;
 	
 	/**
+	 * The left panel.
+	 */
+	private JPanel leftPanel;
+	
+	/**
+	 * The right panel.
+	 */
+	private JPanel rightPanel;
+
+	/**
+	 * The top panel.
+	 */
+	private JPanel topPanel;
+
+	/**
+	 * The bottom panel.
+	 */
+	private JPanel botPanel;
+	
+	/**
 	 * Constructs the SwingUI class.
 	 */
 	public SwingUI() {
 		this.panel = new StartPanel(this);
+		this.leftPanel = new JPanel();
+		this.rightPanel = new JPanel();
+		this.topPanel = new JPanel();
+		this.botPanel = new JPanel();
 		this.init();
 	}
 	
 	/**
-	 * Initializes the JFrame.
+	 * Initializes the JFrame interface.
 	 */
 	public void init() {
 		try {
@@ -41,15 +65,34 @@ public class SwingUI extends JFrame {
 			this.setLayout(new BorderLayout());
 			this.setTitle(Constants.GAME_NAME);
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			this.setPreferredSize(new Dimension(600, 600));
+			this.setPreferredSize(new Dimension(800, 800));
 			this.getPanel().setLayout(new GridLayout(4, 0));
-			this.getContentPane().add(this.getPanel());
-			this.pack();
+			this.leftPanel.setPreferredSize(new Dimension(100, 100));
+			this.rightPanel.setPreferredSize(new Dimension(100, 100));
+			this.topPanel.setPreferredSize(new Dimension(50, 50));
+			this.botPanel.setPreferredSize(new Dimension(50, 50));
+			this.add(leftPanel, BorderLayout.WEST);
+			this.add(rightPanel, BorderLayout.EAST);
+			this.add(topPanel, BorderLayout.NORTH);
+			this.add(botPanel, BorderLayout.SOUTH);
+			this.switchPanel(this.getPanel());
 			this.setVisible(true);
 			this.setResizable(false);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Switches the panel.
+	 * @param panel that is being switched to.
+	 */
+	public void switchPanel(JPanel panel) {
+		this.setResizable(true);
+		this.getContentPane().remove(this.getPanel());
+		this.getContentPane().add(panel, BorderLayout.CENTER);
+		this.setPanel(panel);
+		this.pack();
 	}
 
 	/**
