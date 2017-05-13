@@ -3,7 +3,6 @@ package comp2911.gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -113,14 +112,10 @@ public class SwingUI extends JFrame {
 	/**
 	 * Updates the current interface of the panel.
 	 * The current panel should be the game panel.
-	 * @param board the board to be displayed on the interface.
 	 */
-	public void updateInterface(ArrayList<ArrayList<Character>> board) {
-		/**
-		 * TODO
-		 * we know current panel is game panel
-		 */
-		// paint panel ?
+	public void updateInterface() {
+		this.getPanel().repaint();
+		this.repaint();
 	}
 
 }
