@@ -9,11 +9,6 @@ import comp2911.gui.SwingUI;
 import comp2911.gui.UserInput;
 
 public class GameEngine {
-
-	/**
-	 * The board size.
-	 */
-	public static final int BOARD_SIZE = 10;
 	
 	/**
 	 * Map generator.
@@ -35,7 +30,7 @@ public class GameEngine {
 	 */
 	public GameEngine(SwingUI swingUI) {
 		this.swingUI = swingUI;
-		this.mapGenerator = new comp2911.game.MapGenerator(GameEngine.BOARD_SIZE);
+		this.mapGenerator = new comp2911.game.MapGenerator(Constants.BOARD_SIZE);
 		this.board = this.mapGenerator.createBoard();
 	}
 	
@@ -54,6 +49,13 @@ public class GameEngine {
 		if(Constants.DEBUG_MODE)
 			Logger.getLogger(UserInput.class.getName()).info("Moving...");
 		this.swingUI.updateInterface(this.board);
+	}
+	
+	/**
+	 * @return the board of the game.
+	 */
+	public ArrayList<ArrayList<Character>> getBoard() {
+		return board;
 	}
 	
 }
