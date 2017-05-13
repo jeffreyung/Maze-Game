@@ -39,10 +39,10 @@ public class MapGenerator {
 		
 		for(int i = 0; i < boardSize; i++){
 			row = new ArrayList<Character>();
-			for (int j = 0; j < boardSize; j++){
+			for(int j = 0; j < boardSize; j++){
 				if ((i < TEMPLATE) || (j < TEMPLATE)){
 					row.add('.');
-				} else if ((i >= boardSize - TEMPLATE) || (j >= boardSize - TEMPLATE)){
+				} else if((i >= boardSize - TEMPLATE) || (j >= boardSize - TEMPLATE)){
 					row.add('.');
 				} else {
 					row.add('o');
@@ -65,7 +65,7 @@ public class MapGenerator {
 	public ArrayList<ArrayList<Character>> createBoard() {
 		ArrayList<Position> path = new ArrayList<Position>();
 		Position charPos = new Position(0, 0);
-		
+
 		while(path.isEmpty()){
 			initBoard();
 			addRandWalls();
@@ -86,7 +86,7 @@ public class MapGenerator {
 	 * @param path list of tiles from c to x
 	 */
 	private void addPath(ArrayList<Position> path) {
-		for (Position p : path){
+		for(Position p : path){
 			board.get(p.getX()).set(p.getY(), ' ');
 		}
 		System.out.println();
@@ -106,11 +106,11 @@ public class MapGenerator {
 		
 		seen.add(charPos);
 		
-		if (board.get(x).get(y) != 'x'){
+		if(board.get(x).get(y) != 'x'){
 			
 			next = board.get(x + 1).get(y); //down
 			p = new Position(x + 1, y);
-			if( ((next == 'o') || (next == 'x') || (next == 'c')) && contains(p, seen) == false && finished == false){
+			if(((next == 'o') || (next == 'x') || (next == 'c')) && contains(p, seen) == false && finished == false) {
 				path = makePath(p);
 				if (finished == true){
 					path.add(0, p);
@@ -121,7 +121,7 @@ public class MapGenerator {
 			
 			next = board.get(x - 1).get(y); //up
 			p = new Position(x - 1, y);
-			if( ((next == 'o') || (next == 'x') || (next == 'c')) && contains(p, seen) == false && finished == false){
+			if(((next == 'o') || (next == 'x') || (next == 'c')) && contains(p, seen) == false && finished == false) {
 				path = makePath(p);
 				if (finished == true){
 					path.add(0, p);
@@ -131,7 +131,7 @@ public class MapGenerator {
 			
 			next = board.get(x).get(y + 1); //right
 			p = new Position(x, y + 1);
-			if( ((next == 'o') || (next == 'x') || (next == 'c')) && contains(p, seen) == false && finished == false){
+			if(((next == 'o') || (next == 'x') || (next == 'c')) && contains(p, seen) == false && finished == false) {
 				path = makePath(p);
 				if (finished == true){
 					path.add(0, p);
@@ -141,7 +141,7 @@ public class MapGenerator {
 			
 			next = board.get(x).get(y - 1); //left
 			p = new Position(x, y - 1);
-			if( ((next == 'o') || (next == 'x') || (next == 'c')) && contains(p, seen) == false && finished == false){
+			if( ((next == 'o') || (next == 'x') || (next == 'c')) && contains(p, seen) == false && finished == false) {
 				path = makePath(p);
 				if (finished == true){
 					path.add(0, p);
@@ -165,8 +165,8 @@ public class MapGenerator {
 	 */
 	private boolean contains(Position position, ArrayList<Position> posList) {
 		
-		for (Position p : posList){
-			if ((p.getX() == position.getX()) && (p.getY() == position.getY())){
+		for(Position p : posList) {
+			if((p.getX() == position.getX()) && (p.getY() == position.getY())) {
 				return true;
 			}
 		}
@@ -245,7 +245,7 @@ public class MapGenerator {
 			for(int j = 0; j < rowSize; j++){
 				randNum = random.nextInt(bound);
 				if (randNum == minBound){
-					if ( (((i >= TEMPLATE) && (i < rowSize - TEMPLATE))) && (((j >= TEMPLATE) && (j < rowSize - TEMPLATE))) ){
+					if ( (((i >= TEMPLATE) && (i < rowSize - TEMPLATE))) && (((j >= TEMPLATE) && (j < rowSize - TEMPLATE)))) {
 						board.get(i).set(j, '|');
 					}
 				}
