@@ -40,11 +40,18 @@ public class GameEngine {
 	 */
 	public void sendUserDirection(Direction dir) {
 		/**
-		 * dir == Direction.UP
-		 * dir == Direction.DOWN
-		 * dir == Direction.LEFT
-		 * dir == DIRECTION.RIGHT
+		 * if (dir == Direction.UP)
+		 * 		go up
+		 * if (dir == Direction.DOWN
+		 * 		go down
+		 * if (dir == Direction.LEFT
+		 * 		go left
+		 * if (dir == DIRECTION.RIGHT
+		 * 		go right
 		 * this.board = ???;
+		 */
+		/*
+		 * TODO Insert code for updating the 2D matrix here
 		 */
 		if(Constants.DEBUG_MODE)
 			Logger.getLogger(UserInput.class.getName()).info("Moving...");
