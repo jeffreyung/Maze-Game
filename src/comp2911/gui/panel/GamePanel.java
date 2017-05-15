@@ -101,7 +101,8 @@ public class GamePanel extends JPanel {
 		case 'x':
 			return Color.CYAN;
 		case 'o':
-			return Color.BLUE;
+			return Color.GRAY;
+			//return Color.BLUE;
 		case '.':
 			return Color.RED;
 		case 'c':
@@ -120,6 +121,7 @@ public class GamePanel extends JPanel {
 	 */
 	@Override
 	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		final int boardSize = Constants.BOARD_SIZE + 10;
 		final int tileSize = Constants.TILE_SIZE;
 		this.createTiles(boardSize, tileSize);
@@ -130,6 +132,7 @@ public class GamePanel extends JPanel {
 			g2d.draw(tile.getShape());
 		}
 		g2d.dispose();
+		this.tiles.clear();
 	}
 	
 	/**
