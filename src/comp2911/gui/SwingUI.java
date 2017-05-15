@@ -51,7 +51,6 @@ public class SwingUI extends JFrame {
 		this.rightPanel = new JPanel();
 		this.topPanel = new JPanel();
 		this.botPanel = new JPanel();
-		this.init();
 	}
 	
 	/**
@@ -75,8 +74,6 @@ public class SwingUI extends JFrame {
 			this.add(topPanel, BorderLayout.NORTH);
 			this.add(botPanel, BorderLayout.SOUTH);
 			this.switchPanel(this.getPanel());
-			this.setVisible(true);
-			this.setResizable(false);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -91,6 +88,8 @@ public class SwingUI extends JFrame {
 		this.getContentPane().remove(this.getPanel());
 		this.getContentPane().add(panel, BorderLayout.CENTER);
 		this.setPanel(panel);
+		this.setVisible(true);
+		this.setResizable(false);
 		this.pack();
 	}
 
@@ -114,8 +113,8 @@ public class SwingUI extends JFrame {
 	 * The current panel should be the game panel.
 	 */
 	public void updateInterface() {
-		this.getPanel().repaint();
 		this.repaint();
+		this.getPanel().repaint();
 	}
-
+	
 }
