@@ -48,7 +48,7 @@ public class Position {
 	
 	/**
 	 * The function is usually called for moving a player.
-	 * This increments the y-coordinate.
+	 * This increments the x-coordinate.
 	 */
 	public void moveRight() {
 		this.x++;
