@@ -82,8 +82,8 @@ public class Score {
 		} catch(IOException e) {
 		} finally { 
 			try {
-			writer.close();
-			} catch(Exception ex) {
+				writer.close();
+			} catch(Exception e) {
 			}
 		}
 	}
