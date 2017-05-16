@@ -9,15 +9,9 @@ import java.util.Random;
  *
  */
 public class MapGenerator {
+	
 	private ArrayList<ArrayList<Character>> board;
 	private static final int TEMPLATE = 5;
-	private static final int NUM_DIRECTIONS = 4;
-	private static final int UP = 0; //Use Direction.UP instead etc...
-	private static final int DOWN = 1;
-	private static final int LEFT = 2;
-	private static final int RIGHT = 3;
-	private static final int X = 1;
-	private static final int Y = 0;
 	
 	private ArrayList<Position> seen;
 	private boolean finished;
@@ -37,15 +31,18 @@ public class MapGenerator {
 		board = new ArrayList<ArrayList<Character>>();
 		ArrayList<Character> row;
 		
-		for(int i = 0; i < boardSize; i++){
+		for(int i = 0; i < boardSize; i++) {
 			row = new ArrayList<Character>();
 			for(int j = 0; j < boardSize; j++){
-				if ((i < TEMPLATE) || (j < TEMPLATE)){
-					row.add('.');
-				} else if((i >= boardSize - TEMPLATE) || (j >= boardSize - TEMPLATE)){
-					row.add('.');
+				if ((i < TEMPLATE) || (j < TEMPLATE)) {
+					row.add('t');
+				} else if((i >= boardSize - TEMPLATE) || (j >= boardSize - TEMPLATE)) {
+					row.add('t');
 				} else {
-					row.add('o');
+					if ((int) ( Math.random() * 5) == 0)
+						row.add('.');
+					else
+						row.add('o');
 				}
 			}
 			board.add(row);
@@ -61,6 +58,7 @@ public class MapGenerator {
 	 * . - box start position
 	 * c - character start position
 	 * b - bomb start position
+	 * t - template
 	 */
 	public ArrayList<ArrayList<Character>> createBoard() {
 		ArrayList<Position> path = new ArrayList<Position>();
