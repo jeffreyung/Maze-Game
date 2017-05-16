@@ -102,9 +102,10 @@ public class GamePanel extends JPanel {
 			return Color.CYAN;
 		case 'o':
 			return Color.GRAY;
-			//return Color.BLUE;
+		case 't':
+			return Color.BLACK;
 		case '.':
-			return Color.RED;
+			return Color.ORANGE;
 		case 'c':
 			return Color.GREEN;
 		case 'b':
