@@ -16,9 +16,14 @@ public class Player {
 	private int index;
 	
 	/**
-	 * The player username.
+	 * The player's username.
 	 */
 	private String username;
+	
+	/**
+	 * The player's current score.
+	 */
+	private int score;
 	
 	/**
 	 * Constructs a new player.
@@ -50,23 +55,44 @@ public class Player {
 	}
 
 	/**
-	 * @param index the index to set
+	 * @param index the index to set.
 	 */
 	public void setIndex(int index) {
 		this.index = index;
 	}
 
 	/**
-	 * @return the username
+	 * @return the username.
 	 */
 	public String getUsername() {
 		return username;
 	}
 
 	/**
-	 * @param username the username to set
+	 * @param username the username to set.
 	 */
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	/**
+	 * @return the score.
+	 */
+	public int getScore() {
+		return score;
+	}
+
+	/**
+	 * Increments the player's score.
+	 */
+	public void incrementScore() {
+		this.score++;
+	}
+	
+	/**
+	 * Decrements the player's score.
+	 */
+	public void decrementScore() {
+		this.score--;
 	}
 }
