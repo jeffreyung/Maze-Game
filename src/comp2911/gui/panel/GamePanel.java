@@ -62,6 +62,7 @@ public class GamePanel extends JPanel {
 		this.swingUI.addKeyListener(this.userInput);
 		this.setFocusable(true);
 		this.requestFocusInWindow();
+		this.setBackground(Color.BLACK);
 		this.swingUI.requestFocusInWindow();
 		this.setVisible(true);
 	}
