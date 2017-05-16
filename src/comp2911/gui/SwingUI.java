@@ -1,6 +1,7 @@
 package comp2911.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
@@ -69,6 +70,10 @@ public class SwingUI extends JFrame {
 			this.rightPanel.setPreferredSize(new Dimension(100, 100));
 			this.topPanel.setPreferredSize(new Dimension(50, 50));
 			this.botPanel.setPreferredSize(new Dimension(50, 50));
+			this.scorePanel.setBackground(Color.BLACK);
+			this.rightPanel.setBackground(Color.BLACK);
+			this.topPanel.setBackground(Color.BLACK);
+			this.botPanel.setBackground(Color.BLACK);
 			this.add(scorePanel, BorderLayout.WEST);
 			this.add(rightPanel, BorderLayout.EAST);
 			this.add(topPanel, BorderLayout.NORTH);
@@ -89,6 +94,7 @@ public class SwingUI extends JFrame {
 		this.getContentPane().add(panel, BorderLayout.CENTER);
 		this.setPanel(panel);
 		this.setVisible(true);
+		this.setBackground(Color.BLACK);
 		this.setResizable(false);
 		this.pack();
 	}
