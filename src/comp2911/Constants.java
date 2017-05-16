@@ -1,7 +1,7 @@
 package comp2911;
 
 /**
- * The Constants class contains fields that should remain unchanged
+ * The Constants class contains fields that should remain unchanged.
  */
 public class Constants {
 
@@ -29,6 +29,20 @@ public class Constants {
 	/**
 	 * The tile size.
 	 */
-	public static final int TILE_SIZE = 25;
+	public static final int TILE_SIZE = 30;
 	
+	/**
+	 * The maximum list size for the scoreboard.
+	 */
+	public static final int SCOREBOARD_SIZE = 10;
+	
+	/**
+	 * The scores directory.
+	 */
+	public static final String SCORES_DIR = "./data/scores";
+	
+	/**
+	 * The maximum amount of players.
+	 */
+	public static final int MAX_PLAYERS = 2;
 }
