@@ -8,6 +8,7 @@ import comp2911.game.Direction;
 import comp2911.game.MapGenerator;
 import comp2911.game.Player;
 import comp2911.game.Position;
+import comp2911.game.Score;
 import comp2911.gui.SwingUI;
 import comp2911.gui.UserInput;
 
@@ -22,6 +23,11 @@ public class GameEngine {
 	 * Swing user input.
 	 */
 	private SwingUI swingUI;
+	
+	/**
+	 * The score handler.
+	 */
+	private Score score;
 	
 	/**
 	 * The 2-Dimensional board.
@@ -44,9 +50,30 @@ public class GameEngine {
 	public GameEngine(SwingUI swingUI) {
 		this.swingUI = swingUI;
 		this.mapGenerator = new comp2911.game.MapGenerator(Constants.BOARD_SIZE);
-		this.board = this.mapGenerator.createBoard();
+		this.generateBoard(1);
 		this.players = new ArrayList<Player>(Constants.MAX_PLAYERS);
 		this.addPlayer("username"); // TODO handle username system
+	}
+	
+	/**
+	 * Generates a new board for a given level
+	 * @param level of the game.
+	 */
+	public void generateBoard(int level) {
+		this.score = new Score(level);
+		this.board = this.mapGenerator.createBoard();
+		board.get(10).set(10, 'x');
+		this.score.readScoreData();
+	}
+	
+	/**
+	 * Completes the game for a player.
+	 * @param index of the player who has completed current level of the game.
+	 */
+	public void completeGame(int index) {
+		Player player = this.players.get(index);
+		//TODO
+		this.score.writeScoreData(player.getUsername(), player.getScore());
 	}
 	
 	/**
@@ -57,8 +84,8 @@ public class GameEngine {
 	public void sendUserDirection(int index, Direction dir) {
 		Position playerPos = this.getPlayerPos(index);
 		this.interact = false;
-		this.interactEmptyTile(playerPos, dir);
-		this.interactCrate(playerPos, dir);
+		this.interactEmptyTile(index, dir);
+		this.interactCrate(index, dir);
 		this.swingUI.updateInterface();
 		if(Constants.DEBUG_MODE)
 			Logger.getLogger(UserInput.class.getName()).info("Moving (" + playerPos.getX() + ", " + playerPos.getY() + ")");
@@ -66,10 +93,11 @@ public class GameEngine {
 
 	/**
 	 * A player moves to the direction they have input.
-	 * @param playerPos is the player position to be updated.
+	 * @param index of the player whose position is to be updated.
 	 * @param dir is the direction to be moved direction to be moved.
 	 */
-	public void interactEmptyTile(Position playerPos, Direction dir) {
+	public void interactEmptyTile(int index, Direction dir) {
+		Position playerPos = this.getPlayerPos(index);
 		if(this.interact)
 			return;
 		switch(dir) {
@@ -115,54 +143,83 @@ public class GameEngine {
 	/**
 	 * A player moves to the direction they have input. This is similar to moving
 	 * to an empty tile, except this also pushes the crate.
-	 * @param playerPos is the player position to be updated.
+	 * @param index of the player whose position is to be updated.
 	 * @param dir is the direction to be moved direction to be moved.
 	 */
-	private void interactCrate(Position playerPos, Direction dir) {
+	private void interactCrate(int index, Direction dir) {
+		Position playerPos = this.getPlayerPos(index);
 		if(this.interact)
 			return;
 		switch(dir) {
 		case UP:
-			if(getTileType(playerPos.getX(), playerPos.getY() - 1) == '.' &&
-					(getTileType(playerPos.getX(), playerPos.getY() - 2) == 'o' ||
-					getTileType(playerPos.getX(), playerPos.getY() - 2) == ' ')) {
+			if(getTileType(playerPos.getX(), playerPos.getY() - 1) != '.')
+				return;
+			if (getTileType(playerPos.getX(), playerPos.getY() - 2) == 'o' ||
+					getTileType(playerPos.getX(), playerPos.getY() - 2) == ' ') {
 				board.get(playerPos.getY()).set(playerPos.getX(), 'o');
 				board.get(playerPos.getY() - 1).set(playerPos.getX(), 'c');
 				board.get(playerPos.getY() - 2).set(playerPos.getX(), '.');
 				playerPos.moveUp();
 				this.interact = true;
+			} else if (getTileType(playerPos.getX(), playerPos.getY() - 2) == 'x') {
+				board.get(playerPos.getY()).set(playerPos.getX(), 'o');
+				board.get(playerPos.getY() - 1).set(playerPos.getX(), 'c');
+				playerPos.moveUp();
+				players.get(index).incrementScore();
+				this.interact = true;
 			}
 			break;
 		case DOWN:
-			if(getTileType(playerPos.getX(), playerPos.getY() + 1) == '.' &&
-					(getTileType(playerPos.getX(), playerPos.getY() + 2) == 'o' ||
-					getTileType(playerPos.getX(), playerPos.getY() + 2) == ' ')) {
+			if(getTileType(playerPos.getX(), playerPos.getY() + 1) != '.')
+				return;
+			if(getTileType(playerPos.getX(), playerPos.getY() + 2) == 'o' ||
+					getTileType(playerPos.getX(), playerPos.getY() + 2) == ' ') {
 				board.get(playerPos.getY()).set(playerPos.getX(), 'o');
 				board.get(playerPos.getY() + 1).set(playerPos.getX(), 'c');
 				board.get(playerPos.getY() + 2).set(playerPos.getX(), '.');
 				playerPos.moveDown();
 				this.interact = true;
+			} else if(getTileType(playerPos.getX(), playerPos.getY() + 2) == 'x') {
+				board.get(playerPos.getY()).set(playerPos.getX(), 'o');
+				board.get(playerPos.getY() + 1).set(playerPos.getX(), 'c');
+				playerPos.moveDown();
+				players.get(index).incrementScore();
+				this.interact = true;
 			}
 			break;
 		case LEFT:
-			if(getTileType(playerPos.getX() - 1, playerPos.getY()) == '.' &&
-					(getTileType(playerPos.getX() - 2, playerPos.getY()) == 'o' ||
-					getTileType(playerPos.getX() - 2, playerPos.getY()) == ' ')) {
+			if(getTileType(playerPos.getX() - 1, playerPos.getY()) != '.')
+				return;
+			if(getTileType(playerPos.getX() - 2, playerPos.getY()) == 'o' ||
+					getTileType(playerPos.getX() - 2, playerPos.getY()) == ' ') {
 				board.get(playerPos.getY()).set(playerPos.getX(), 'o');
 				board.get(playerPos.getY()).set(playerPos.getX() - 1, 'c');
 				board.get(playerPos.getY()).set(playerPos.getX() - 2, '.');
 				playerPos.moveLeft();
 				this.interact = true;
+			} else if(getTileType(playerPos.getX() - 2, playerPos.getY()) == 'x') {
+				board.get(playerPos.getY()).set(playerPos.getX(), 'o');
+				board.get(playerPos.getY()).set(playerPos.getX() - 1, 'c');
+				playerPos.moveLeft();
+				players.get(index).incrementScore();
+				this.interact = true;
 			}
 			break;
 		case RIGHT:
-			if(getTileType(playerPos.getX() + 1, playerPos.getY()) == '.' &&
-					(getTileType(playerPos.getX() + 2, playerPos.getY()) == 'o' ||
-					getTileType(playerPos.getX() + 2, playerPos.getY()) == ' ')) {
+			if(getTileType(playerPos.getX() + 1, playerPos.getY()) != '.')
+				return;
+			if(getTileType(playerPos.getX() + 2, playerPos.getY()) == 'o' ||
+					getTileType(playerPos.getX() + 2, playerPos.getY()) == ' ') {
 				board.get(playerPos.getY()).set(playerPos.getX(), 'o');
 				board.get(playerPos.getY()).set(playerPos.getX() + 1, 'c');
 				board.get(playerPos.getY()).set(playerPos.getX() + 2, '.');
 				playerPos.moveRight();
+				this.interact = true;
+			} else if(getTileType(playerPos.getX() + 2, playerPos.getY()) == 'x') {
+				board.get(playerPos.getY()).set(playerPos.getX(), 'o');
+				board.get(playerPos.getY()).set(playerPos.getX() + 1, 'c');
+				playerPos.moveRight();
+				players.get(index).incrementScore();
 				this.interact = true;
 			}
 			break;
