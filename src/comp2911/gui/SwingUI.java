@@ -23,9 +23,9 @@ public class SwingUI extends JFrame {
 	private JPanel panel;
 	
 	/**
-	 * The left panel.
+	 * The left panel i.e., the score panel.
 	 */
-	private JPanel leftPanel;
+	private JPanel scorePanel;
 	
 	/**
 	 * The right panel.
@@ -47,7 +47,7 @@ public class SwingUI extends JFrame {
 	 */
 	public SwingUI() {
 		this.panel = new StartPanel(this);
-		this.leftPanel = new JPanel();
+		this.scorePanel = new JPanel();
 		this.rightPanel = new JPanel();
 		this.topPanel = new JPanel();
 		this.botPanel = new JPanel();
@@ -65,11 +65,11 @@ public class SwingUI extends JFrame {
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			this.setPreferredSize(new Dimension(800, 800));
 			this.getPanel().setLayout(new GridLayout(4, 0));
-			this.leftPanel.setPreferredSize(new Dimension(100, 100));
+			this.scorePanel.setPreferredSize(new Dimension(100, 100));
 			this.rightPanel.setPreferredSize(new Dimension(100, 100));
 			this.topPanel.setPreferredSize(new Dimension(50, 50));
 			this.botPanel.setPreferredSize(new Dimension(50, 50));
-			this.add(leftPanel, BorderLayout.WEST);
+			this.add(scorePanel, BorderLayout.WEST);
 			this.add(rightPanel, BorderLayout.EAST);
 			this.add(topPanel, BorderLayout.NORTH);
 			this.add(botPanel, BorderLayout.SOUTH);
@@ -78,7 +78,7 @@ public class SwingUI extends JFrame {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Switches the panel.
 	 * @param panel that is being switched to.
