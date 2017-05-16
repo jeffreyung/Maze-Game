@@ -42,16 +42,16 @@ public class UserInput implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		switch(e.getKeyCode()) {
 		case KeyEvent.VK_W:
-			this.gameEngine.sendUserDirection(Direction.UP);
+			this.gameEngine.sendUserDirection(0, Direction.UP);
 			break;
 		case KeyEvent.VK_A:
-			this.gameEngine.sendUserDirection(Direction.LEFT);
+			this.gameEngine.sendUserDirection(0, Direction.LEFT);
 			break;
 		case KeyEvent.VK_S:
-			this.gameEngine.sendUserDirection(Direction.DOWN);
+			this.gameEngine.sendUserDirection(0, Direction.DOWN);
 			break;
 		case KeyEvent.VK_D:
-			this.gameEngine.sendUserDirection(Direction.RIGHT);
+			this.gameEngine.sendUserDirection(0, Direction.RIGHT);
 			break;
 		default:
 			if (Constants.DEBUG_MODE)
