@@ -45,6 +45,8 @@ public class Score {
 
 		try {
 			File file = new File(Constants.SCORES_DIR + "/" + level + ".txt");
+			if (!file.exists())
+				file.createNewFile();
 			reader = new BufferedReader(new FileReader(file));
 			String line;
 			while ((line = reader.readLine()) != null) {
@@ -83,7 +85,7 @@ public class Score {
 		} finally { 
 			try {
 				writer.close();
-			} catch(Exception e) {
+			} catch(IOException e) {
 			}
 		}
 	}
