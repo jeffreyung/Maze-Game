@@ -44,6 +44,9 @@ public class GameEngine {
 	 */
 	private boolean interact;
 	
+	/**
+	 * The board size.
+	 */
 	private int boardSize;
 	
 	/**
@@ -84,7 +87,7 @@ public class GameEngine {
 	 * @param dir is the direction to be moved.
 	 */
 	public void sendUserDirection(int index, Direction dir) {
-		Position playerPos = this.getPlayerPos(index);
+		Position playerPos = this.players.get(index).getPosition();
 		this.interact = false;
 		this.interactEmptyTile(index, dir);
 		this.interactCrate(index, dir);
@@ -99,42 +102,48 @@ public class GameEngine {
 	 * @param dir is the direction to be moved direction to be moved.
 	 */
 	public void interactEmptyTile(int index, Direction dir) {
-		Position playerPos = this.getPlayerPos(index);
+		Player player = this.players.get(index);
+		Position playerPos = player.getPosition();
+		char tileType;
 		if(this.interact)
 			return;
 		switch(dir) {
 		case UP:
-			if(getTileType(playerPos.getX(), playerPos.getY() - 1) == 'o' ||
-					getTileType(playerPos.getX(), playerPos.getY() - 1) == ' ') {
-				board.get(playerPos.getY()).set(playerPos.getX(), 'o');
+			tileType = getTileType(playerPos.getX(), playerPos.getY() - 1);
+			if(tileType == ' ' || tileType == 'x') {
+				board.get(playerPos.getY()).set(playerPos.getX(), player.isStandingOnGoal() ? 'x' : ' ');
 				board.get(playerPos.getY() - 1).set(playerPos.getX(), 'c');
+				player.setStandingOnGoal(tileType == 'x');
 				playerPos.moveUp();
 				this.interact = true;
 			}
 			break;
 		case DOWN:
-			if(getTileType(playerPos.getX(), playerPos.getY() + 1) == 'o' ||
-					getTileType(playerPos.getX(), playerPos.getY() + 1) == ' ') {
-				board.get(playerPos.getY()).set(playerPos.getX(), 'o');
+			tileType = getTileType(playerPos.getX(), playerPos.getY() + 1);
+			if(tileType == ' ' || tileType == 'x') {
+				board.get(playerPos.getY()).set(playerPos.getX(), player.isStandingOnGoal() ? 'x' : ' ');
 				board.get(playerPos.getY() + 1).set(playerPos.getX(), 'c');
+				player.setStandingOnGoal(tileType == 'x');
 				playerPos.moveDown();
 				this.interact = true;
 			}
 			break;
 		case LEFT:
-			if(getTileType(playerPos.getX() - 1, playerPos.getY()) == 'o' ||
-					getTileType(playerPos.getX() - 1, playerPos.getY()) == ' ') {
-				board.get(playerPos.getY()).set(playerPos.getX(), 'o');
+			tileType = getTileType(playerPos.getX() - 1, playerPos.getY());
+			if(tileType == ' ' || tileType == 'x') {
+				board.get(playerPos.getY()).set(playerPos.getX(), player.isStandingOnGoal() ? 'x' : ' ');
 				board.get(playerPos.getY()).set(playerPos.getX() - 1, 'c');
+				player.setStandingOnGoal(tileType == 'x');
 				playerPos.moveLeft();
 				this.interact = true;
 			}
 			break;
 		case RIGHT:
-			if(getTileType(playerPos.getX() + 1, playerPos.getY()) == 'o' ||
-					getTileType(playerPos.getX() + 1, playerPos.getY()) == ' ') {
-				board.get(playerPos.getY()).set(playerPos.getX(), 'o');
+			tileType = getTileType(playerPos.getX() + 1, playerPos.getY());
+			if(tileType == ' ' || tileType == 'x') {
+				board.get(playerPos.getY()).set(playerPos.getX(), player.isStandingOnGoal() ? 'x' : ' ');
 				board.get(playerPos.getY()).set(playerPos.getX() + 1, 'c');
+				player.setStandingOnGoal(tileType == 'x');
 				playerPos.moveRight();
 				this.interact = true;
 			}
@@ -149,22 +158,27 @@ public class GameEngine {
 	 * @param dir is the direction to be moved direction to be moved.
 	 */
 	private void interactCrate(int index, Direction dir) {
-		Position playerPos = this.getPlayerPos(index);
+		Player player = this.players.get(index);
+		Position playerPos = player.getPosition();
+		char tileType1;
+		char tileType2;
 		if(this.interact)
 			return;
 		switch(dir) {
 		case UP:
-			if(getTileType(playerPos.getX(), playerPos.getY() - 1) != '.')
+			tileType1 = getTileType(playerPos.getX(), playerPos.getY() - 1);
+			if(tileType1 != '.' && tileType1 != ':')
 				return;
-			if (getTileType(playerPos.getX(), playerPos.getY() - 2) == 'o' ||
-					getTileType(playerPos.getX(), playerPos.getY() - 2) == ' ') {
-				board.get(playerPos.getY()).set(playerPos.getX(), 'o');
+			tileType2 = getTileType(playerPos.getX(), playerPos.getY() - 2);
+			if (tileType2 == ' ') {
+				board.get(playerPos.getY()).set(playerPos.getX(), player.isStandingOnGoal() ? 'x' : ' ');
 				board.get(playerPos.getY() - 1).set(playerPos.getX(), 'c');
 				board.get(playerPos.getY() - 2).set(playerPos.getX(), '.');
 				playerPos.moveUp();
 				this.interact = true;
-			} else if (getTileType(playerPos.getX(), playerPos.getY() - 2) == 'x') {
-				board.get(playerPos.getY()).set(playerPos.getX(), 'o');
+			} else if (tileType2 == 'x') {
+				this.players.get(index).setStandingOnGoal(tileType1 == ':');
+				board.get(playerPos.getY()).set(playerPos.getX(),  ' ');
 				board.get(playerPos.getY() - 1).set(playerPos.getX(), 'c');
 				board.get(playerPos.getY() - 2).set(playerPos.getX(), ':');
 				playerPos.moveUp();
@@ -173,17 +187,19 @@ public class GameEngine {
 			}
 			break;
 		case DOWN:
-			if(getTileType(playerPos.getX(), playerPos.getY() + 1) != '.')
+			tileType1 = getTileType(playerPos.getX(), playerPos.getY() + 1);
+			if(tileType1 != '.' && tileType1 != ':')
 				return;
-			if(getTileType(playerPos.getX(), playerPos.getY() + 2) == 'o' ||
-					getTileType(playerPos.getX(), playerPos.getY() + 2) == ' ') {
-				board.get(playerPos.getY()).set(playerPos.getX(), 'o');
+			tileType2 = getTileType(playerPos.getX(), playerPos.getY() + 2);
+			if(tileType2 == ' ') {
+				board.get(playerPos.getY()).set(playerPos.getX(), player.isStandingOnGoal() ? 'x' : ' ');
 				board.get(playerPos.getY() + 1).set(playerPos.getX(), 'c');
 				board.get(playerPos.getY() + 2).set(playerPos.getX(), '.');
 				playerPos.moveDown();
 				this.interact = true;
-			} else if(getTileType(playerPos.getX(), playerPos.getY() + 2) == 'x') {
-				board.get(playerPos.getY()).set(playerPos.getX(), 'o');
+			} else if(tileType2 == 'x') {
+				this.players.get(index).setStandingOnGoal(tileType1 == ':');
+				board.get(playerPos.getY()).set(playerPos.getX(),  ' ');
 				board.get(playerPos.getY() + 1).set(playerPos.getX(), 'c');
 				board.get(playerPos.getY() + 2).set(playerPos.getX(), ':');
 				playerPos.moveDown();
@@ -192,17 +208,19 @@ public class GameEngine {
 			}
 			break;
 		case LEFT:
-			if(getTileType(playerPos.getX() - 1, playerPos.getY()) != '.')
+			tileType1 = getTileType(playerPos.getX() - 1, playerPos.getY());
+			if(tileType1 != '.' && tileType1 != ':')
 				return;
-			if(getTileType(playerPos.getX() - 2, playerPos.getY()) == 'o' ||
-					getTileType(playerPos.getX() - 2, playerPos.getY()) == ' ') {
-				board.get(playerPos.getY()).set(playerPos.getX(), 'o');
+			tileType2 = getTileType(playerPos.getX() - 2, playerPos.getY());
+			if(tileType2 == ' ') {
+				board.get(playerPos.getY()).set(playerPos.getX(), player.isStandingOnGoal() ? 'x' : ' ');
 				board.get(playerPos.getY()).set(playerPos.getX() - 1, 'c');
 				board.get(playerPos.getY()).set(playerPos.getX() - 2, '.');
 				playerPos.moveLeft();
 				this.interact = true;
-			} else if(getTileType(playerPos.getX() - 2, playerPos.getY()) == 'x') {
-				board.get(playerPos.getY()).set(playerPos.getX(), 'o');
+			} else if(tileType2 == 'x') {
+				this.players.get(index).setStandingOnGoal(tileType1 == ':');
+				board.get(playerPos.getY()).set(playerPos.getX(), ' ');
 				board.get(playerPos.getY()).set(playerPos.getX() - 1, 'c');
 				board.get(playerPos.getY()).set(playerPos.getX() - 2, ':');
 				playerPos.moveLeft();
@@ -211,17 +229,19 @@ public class GameEngine {
 			}
 			break;
 		case RIGHT:
-			if(getTileType(playerPos.getX() + 1, playerPos.getY()) != '.')
+			tileType1 = getTileType(playerPos.getX() + 1, playerPos.getY());
+			if(tileType1 != '.' && tileType1 != ':')
 				return;
-			if(getTileType(playerPos.getX() + 2, playerPos.getY()) == 'o' ||
-					getTileType(playerPos.getX() + 2, playerPos.getY()) == ' ') {
-				board.get(playerPos.getY()).set(playerPos.getX(), 'o');
+			tileType2 = getTileType(playerPos.getX() + 2, playerPos.getY());
+			if(tileType2 == ' ') {
+				board.get(playerPos.getY()).set(playerPos.getX(), ' ');
 				board.get(playerPos.getY()).set(playerPos.getX() + 1, 'c');
 				board.get(playerPos.getY()).set(playerPos.getX() + 2, '.');
 				playerPos.moveRight();
 				this.interact = true;
-			} else if(getTileType(playerPos.getX() + 2, playerPos.getY()) == 'x') {
-				board.get(playerPos.getY()).set(playerPos.getX(), 'o');
+			} else if(tileType2 == 'x') {
+				this.players.get(index).setStandingOnGoal(tileType1 == ':');
+				board.get(playerPos.getY()).set(playerPos.getX(), ' ');
 				board.get(playerPos.getY()).set(playerPos.getX() + 1, 'c');
 				board.get(playerPos.getY()).set(playerPos.getX() + 2, ':');
 				playerPos.moveRight();
@@ -240,14 +260,6 @@ public class GameEngine {
 		Player player = new Player(this.players.size());
 		this.players.add(player);
 		player.setPosition(this.mapGenerator.getInitialCharPos());
-	}
-	
-	/**
-	 * @param index of the player whose position is to be found.
-	 * @return the player position of the corresponding index.
-	 */
-	public Position getPlayerPos(int index) {
-		return this.players.get(index).getPosition();
 	}
 	
 	/**
