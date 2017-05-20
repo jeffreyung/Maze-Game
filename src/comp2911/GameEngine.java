@@ -166,6 +166,7 @@ public class GameEngine {
 			} else if (getTileType(playerPos.getX(), playerPos.getY() - 2) == 'x') {
 				board.get(playerPos.getY()).set(playerPos.getX(), 'o');
 				board.get(playerPos.getY() - 1).set(playerPos.getX(), 'c');
+				board.get(playerPos.getY() - 2).set(playerPos.getX(), ':');
 				playerPos.moveUp();
 				players.get(index).incrementScore();
 				this.interact = true;
@@ -184,6 +185,7 @@ public class GameEngine {
 			} else if(getTileType(playerPos.getX(), playerPos.getY() + 2) == 'x') {
 				board.get(playerPos.getY()).set(playerPos.getX(), 'o');
 				board.get(playerPos.getY() + 1).set(playerPos.getX(), 'c');
+				board.get(playerPos.getY() + 2).set(playerPos.getX(), ':');
 				playerPos.moveDown();
 				players.get(index).incrementScore();
 				this.interact = true;
@@ -202,6 +204,7 @@ public class GameEngine {
 			} else if(getTileType(playerPos.getX() - 2, playerPos.getY()) == 'x') {
 				board.get(playerPos.getY()).set(playerPos.getX(), 'o');
 				board.get(playerPos.getY()).set(playerPos.getX() - 1, 'c');
+				board.get(playerPos.getY()).set(playerPos.getX() - 2, ':');
 				playerPos.moveLeft();
 				players.get(index).incrementScore();
 				this.interact = true;
@@ -220,6 +223,7 @@ public class GameEngine {
 			} else if(getTileType(playerPos.getX() + 2, playerPos.getY()) == 'x') {
 				board.get(playerPos.getY()).set(playerPos.getX(), 'o');
 				board.get(playerPos.getY()).set(playerPos.getX() + 1, 'c');
+				board.get(playerPos.getY()).set(playerPos.getX() + 2, ':');
 				playerPos.moveRight();
 				players.get(index).incrementScore();
 				this.interact = true;

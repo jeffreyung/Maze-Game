@@ -80,6 +80,10 @@ public class GamePanel extends JPanel {
 		this.setVisible(true);
 		try {
 			this.attribute.put('c', ImageIO.read(new File(Constants.IMAGES_DIR + "/player.gif")));
+			this.attribute.put('.', ImageIO.read(new File(Constants.IMAGES_DIR + "/crate_1.gif")));
+			this.attribute.put(':', ImageIO.read(new File(Constants.IMAGES_DIR + "/crate_2.gif")));
+			this.attribute.put('x', ImageIO.read(new File(Constants.IMAGES_DIR + "/goal.gif")));
+			this.attribute.put(' ', ImageIO.read(new File(Constants.IMAGES_DIR + "/tile.gif")));
 		} catch (IOException e) {
 		}
 	}
@@ -95,7 +99,7 @@ public class GamePanel extends JPanel {
 			return;
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
-				Rectangle rectangle = new Rectangle(x * tileSize, y * tileSize, tileSize - 5, tileSize - 5);
+				Rectangle rectangle = new Rectangle(x * tileSize, y * tileSize, tileSize - 2, tileSize - 2);
 				char type = this.gameEngine.getBoard().get(y).get(x);
 				if (this.attribute.containsKey(type))
 					this.tiles.add(new Tile(getColor(type), this.attribute.get(type), rectangle));
@@ -112,24 +116,19 @@ public class GamePanel extends JPanel {
 	 * | - wall
 	 * x - goal
 	 * o - empty space
-	 * . - box start position
-	 * c - character start position
-	 * b - bomb start position
+	 * . - box
+	 * : - box in goal
+	 * c - character
+	 * b - bomb
 	 */
 	public Color getColor(char type) {
 		switch (type) {
 		case '|':
 			return Color.BLACK;
-		case 'x':
-			return Color.CYAN;
 		case 't':
 			return Color.BLACK;
-		case '.':
-			return Color.ORANGE;
-		case 'b':
-			return Color.YELLOW;
 		}
-		return Color.GRAY;
+		return Color.DARK_GRAY;
 	}
 	
 	/**
