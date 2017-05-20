@@ -16,20 +16,9 @@ public class Constants {
 	public static final boolean DEBUG_MODE = true;
 	
 	/**
-	 * The board size.
-	 */
-	public static final int BOARD_SIZE = 10;
-	
-	/**
-	 * The maximum board size.
-	 * Set this to an even number so the main game board can be placed at the center.
-	 */
-	public static final int MAX_BOARD_SIZE = 10;
-	
-	/**
 	 * The tile size.
 	 */
-	public static final int TILE_SIZE = 30;
+	public static final int TILE_SIZE = 40;
 	
 	/**
 	 * The maximum list size for the scoreboard.
@@ -40,6 +29,11 @@ public class Constants {
 	 * The scores directory.
 	 */
 	public static final String SCORES_DIR = "./data/scores";
+	
+	/**
+	 * The image directory.
+	 */
+	public static final String IMAGES_DIR = "./data/img";
 	
 	/**
 	 * The maximum amount of players.

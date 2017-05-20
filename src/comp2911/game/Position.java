@@ -69,6 +69,13 @@ public class Position {
 	}
 	
 	/**
+	 * Clones the position of the coordinates.
+	 */
+	public Position clone() {
+		return new Position(x, y);
+	}
+	
+	/**
 	 * @return the string format of the position.
 	 */
 	@Override

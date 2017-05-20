@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
 import comp2911.Constants;
+import comp2911.gui.panel.ScorePanel;
 import comp2911.gui.panel.StartPanel;
 
 /**
@@ -24,9 +25,9 @@ public class SwingUI extends JFrame {
 	private JPanel panel;
 	
 	/**
-	 * The left panel i.e., the score panel.
+	 * The left panel i.e., the score panel not scoreboard panel.
 	 */
-	private JPanel scorePanel;
+	private ScorePanel scorePanel;
 	
 	/**
 	 * The right panel.
@@ -44,14 +45,20 @@ public class SwingUI extends JFrame {
 	private JPanel botPanel;
 	
 	/**
+	 * If game has started.
+	 */
+	private boolean gameStart;
+	
+	/**
 	 * Constructs the SwingUI class.
 	 */
 	public SwingUI() {
 		this.panel = new StartPanel(this);
-		this.scorePanel = new JPanel();
+		this.scorePanel = new ScorePanel(this);
 		this.rightPanel = new JPanel();
 		this.topPanel = new JPanel();
 		this.botPanel = new JPanel();
+		this.setGameStart(false);
 	}
 	
 	/**
@@ -64,7 +71,7 @@ public class SwingUI extends JFrame {
 			this.setLayout(new BorderLayout());
 			this.setTitle(Constants.GAME_NAME);
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			this.setPreferredSize(new Dimension(800, 800));
+			this.setPreferredSize(new Dimension(600, 600));
 			this.getPanel().setLayout(new GridLayout(4, 0));
 			this.scorePanel.setPreferredSize(new Dimension(100, 100));
 			this.rightPanel.setPreferredSize(new Dimension(100, 100));
@@ -119,8 +126,24 @@ public class SwingUI extends JFrame {
 	 * The current panel should be the game panel.
 	 */
 	public void updateInterface() {
+		this.scorePanel.updateScore();
 		this.repaint();
 		this.getPanel().repaint();
 	}
-	
+
+	/**
+	 * @return if the game started.
+	 */
+	public boolean isGameStart() {
+		return gameStart;
+	}
+
+	/**
+	 * Updates if the game started.
+	 * @param gameStart is if the game started.
+	 */
+	public void setGameStart(boolean gameStart) {
+		this.gameStart = gameStart;
+	}
+
 }

@@ -44,13 +44,15 @@ public class GameEngine {
 	 */
 	private boolean interact;
 	
+	private int boardSize;
+	
 	/**
 	 * Constructs a new GameEngine and initializes the variables.
 	 */
 	public GameEngine(SwingUI swingUI) {
 		this.swingUI = swingUI;
-		this.mapGenerator = new comp2911.game.MapGenerator(Constants.BOARD_SIZE);
-		this.generateBoard(1);
+		this.mapGenerator = new comp2911.game.MapGenerator();
+		this.generateBoard(1); // generate board for level 1
 		this.players = new ArrayList<Player>(Constants.MAX_PLAYERS);
 		this.addPlayer("username"); // TODO handle username system
 	}
@@ -62,7 +64,7 @@ public class GameEngine {
 	public void generateBoard(int level) {
 		this.score = new Score(level);
 		this.board = this.mapGenerator.createBoard();
-		board.get(10).set(10, 'x');
+		this.boardSize = this.mapGenerator.getBoardSize();
 		this.score.readScoreData();
 	}
 	
@@ -233,7 +235,7 @@ public class GameEngine {
 	public void addPlayer(String username) {
 		Player player = new Player(this.players.size());
 		this.players.add(player);
-		player.setPosition(this.findPlayerPos());
+		player.setPosition(this.mapGenerator.getInitialCharPos());
 	}
 	
 	/**
@@ -252,28 +254,20 @@ public class GameEngine {
 	public char getTileType(int x, int y) {
 		return board.get(y).get(x);
 	}
-	
-	/**
-	 * @return the character's current position on the board.
-	 */
-	public Position findPlayerPos() {
-		int x = 0, y = 0;
-		for (int i = 0; i < Constants.BOARD_SIZE + 10; i++) {
-			for (int j = 0; j < Constants.BOARD_SIZE + 10; j++) {
-				if (board.get(j).get(i) == 'c') {
-					x = i;
-					y = j;
-					break;
-				}
-			}
-		}
-		return new Position(x, y);
-	}
+
 	/**
 	 * @return the board of the game.
 	 */
 	public ArrayList<ArrayList<Character>> getBoard() {
 		return board;
+	}
+	
+	/**
+	 * Provides the rectangular board size
+	 * @return the size of the board
+	 */
+	public int getBoardSize() {
+		return boardSize;
 	}
 	
 }
