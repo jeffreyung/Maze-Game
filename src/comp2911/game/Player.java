@@ -26,6 +26,11 @@ public class Player {
 	private int score;
 	
 	/**
+	 * If player is standing on the goal.
+	 */
+	private boolean standingOnGoal;
+	
+	/**
 	 * Constructs a new player.
 	 * @param index of the player.
 	 */
@@ -94,5 +99,19 @@ public class Player {
 	 */
 	public void decrementScore() {
 		this.score--;
+	}
+
+	/**
+	 * @return if the player is standing on the goal.
+	 */
+	public boolean isStandingOnGoal() {
+		return standingOnGoal;
+	}
+
+	/**
+	 * @param standingOnGoal is if the player is standing on the goal.
+	 */
+	public void setStandingOnGoal(boolean standingOnGoal) {
+		this.standingOnGoal = standingOnGoal;
 	}
 }
