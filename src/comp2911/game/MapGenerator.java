@@ -398,7 +398,7 @@ public class MapGenerator implements MapInterface{
 	}
 	
 	@Override
-	public Position getCharPos(){
+	public Position getInitialCharPos(){
 		return intialCharPos;
 	}
 }

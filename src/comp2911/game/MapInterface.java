@@ -20,5 +20,5 @@ public interface MapInterface {
 	 * Gets character position
 	 * @return character position
 	 */
-	public Position getCharPos();
+	public Position getInitialCharPos();
 }
