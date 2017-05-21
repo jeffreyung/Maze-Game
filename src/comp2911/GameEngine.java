@@ -138,6 +138,12 @@ public class GameEngine {
 			Logger.getLogger(UserInput.class.getName()).info("Moving (" + playerPos.getX() + ", " + playerPos.getY() + ")");
 		if(solver.isGameComplete())
 			this.completeGame(index);
+		else if (!solver.isSolvable()) {
+			System.out.println();
+			Logger.getLogger(UserInput.class.getName()).info("Game over - no crates can be moved.");
+			System.out.println();
+		}
+			
 	}
 
 	/**
