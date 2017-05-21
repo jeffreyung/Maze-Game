@@ -31,6 +31,11 @@ public class Player {
 	private boolean standingOnGoal;
 	
 	/**
+	 * If player's current game is completed.
+	 */
+	private boolean completeGame;
+	
+	/**
 	 * Constructs a new player.
 	 * @param index of the player.
 	 */
@@ -113,5 +118,19 @@ public class Player {
 	 */
 	public void setStandingOnGoal(boolean standingOnGoal) {
 		this.standingOnGoal = standingOnGoal;
+	}
+
+	/**
+	 * @return if the current game is completed.
+	 */
+	public boolean isCompleteGame() {
+		return completeGame;
+	}
+
+	/**
+	 * @param completeGame is if the current game is completed.
+	 */
+	public void setCompleteGame(boolean completeGame) {
+		this.completeGame = completeGame;
 	}
 }

@@ -2,6 +2,9 @@ package comp2911;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import comp2911.game.Direction;
@@ -9,10 +12,16 @@ import comp2911.game.MapGenerator;
 import comp2911.game.Player;
 import comp2911.game.Position;
 import comp2911.game.Score;
+import comp2911.game.Solver;
 import comp2911.gui.SwingUI;
 import comp2911.gui.UserInput;
 
 public class GameEngine {
+	
+	/**
+	 * The schedule executor.
+	 */
+	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 	
 	/**
 	 * Map generator.
@@ -30,6 +39,11 @@ public class GameEngine {
 	private Score score;
 	
 	/**
+	 * The solver.
+	 */
+	private Solver solver;
+	
+	/**
 	 * The 2-Dimensional board.
 	 */
 	private ArrayList<ArrayList<Character>> board;
@@ -43,11 +57,21 @@ public class GameEngine {
 	 * To avoid multiple interactions.
 	 */
 	private boolean interact;
+
+	/**
+	 * The height of the board.
+	 */
+	private int height;
 	
 	/**
-	 * The board size.
+	 * The width of the board.
 	 */
-	private int boardSize;
+	private int width;
+	
+	/**
+	 * The current level.
+	 */
+	private int level;
 	
 	/**
 	 * Constructs a new GameEngine and initializes the variables.
@@ -55,7 +79,8 @@ public class GameEngine {
 	public GameEngine(SwingUI swingUI) {
 		this.swingUI = swingUI;
 		this.mapGenerator = new comp2911.game.MapGenerator();
-		this.generateBoard(1); // generate board for level 1
+		this.level = 1;
+		this.generateBoard(level); // generate board for level 1
 		this.players = new ArrayList<Player>(Constants.MAX_PLAYERS);
 		this.addPlayer("username"); // TODO handle username system
 	}
@@ -67,8 +92,10 @@ public class GameEngine {
 	public void generateBoard(int level) {
 		this.score = new Score(level);
 		this.board = this.mapGenerator.createBoard();
-		this.boardSize = this.mapGenerator.getBoardSize();
+		this.width = this.mapGenerator.getBoardSize();
+		this.height = this.mapGenerator.getBoardSize();
 		this.score.readScoreData();
+		this.solver = new Solver(board, width, height);
 	}
 	
 	/**
@@ -77,8 +104,23 @@ public class GameEngine {
 	 */
 	public void completeGame(int index) {
 		Player player = this.players.get(index);
+		if (player.isCompleteGame())
+			return;
 		//TODO
 		this.score.writeScoreData(player.getUsername(), player.getScore());
+		player.setCompleteGame(true);
+		if(Constants.DEBUG_MODE)
+			Logger.getLogger(UserInput.class.getName()).info("Generating new board...");
+		scheduler.schedule(new Runnable() {
+		    @Override
+		    public void run() {
+				generateBoard(level++);
+				solver.initNewGame(board, width, height);
+				player.setPosition(mapGenerator.getInitialCharPos());
+				swingUI.updateInterface();
+				player.setCompleteGame(false);
+		    }
+		}, 1, TimeUnit.SECONDS);
 	}
 	
 	/**
@@ -94,6 +136,8 @@ public class GameEngine {
 		this.swingUI.updateInterface();
 		if(Constants.DEBUG_MODE)
 			Logger.getLogger(UserInput.class.getName()).info("Moving (" + playerPos.getX() + ", " + playerPos.getY() + ")");
+		if(solver.isGameComplete())
+			this.completeGame(index);
 	}
 
 	/**
@@ -105,7 +149,7 @@ public class GameEngine {
 		Player player = this.players.get(index);
 		Position playerPos = player.getPosition();
 		char tileType;
-		if(this.interact)
+		if(this.interact || player.isCompleteGame())
 			return;
 		switch(dir) {
 		case UP:
@@ -162,7 +206,7 @@ public class GameEngine {
 		Position playerPos = player.getPosition();
 		char tileType1;
 		char tileType2;
-		if(this.interact)
+		if(this.interact || player.isCompleteGame())
 			return;
 		switch(dir) {
 		case UP:
@@ -170,20 +214,19 @@ public class GameEngine {
 			if(tileType1 != '.' && tileType1 != ':')
 				return;
 			tileType2 = getTileType(playerPos.getX(), playerPos.getY() - 2);
-			if (tileType2 == ' ') {
+			if(tileType2 == ' ') {
 				board.get(playerPos.getY()).set(playerPos.getX(), player.isStandingOnGoal() ? 'x' : ' ');
 				this.players.get(index).setStandingOnGoal(tileType1 == ':');
 				board.get(playerPos.getY() - 1).set(playerPos.getX(), 'c');
 				board.get(playerPos.getY() - 2).set(playerPos.getX(), '.');
 				playerPos.moveUp();
 				this.interact = true;
-			} else if (tileType2 == 'x') {
+			} else if(tileType2 == 'x') {
 				this.players.get(index).setStandingOnGoal(tileType1 == ':');
 				board.get(playerPos.getY()).set(playerPos.getX(),  ' ');
 				board.get(playerPos.getY() - 1).set(playerPos.getX(), 'c');
 				board.get(playerPos.getY() - 2).set(playerPos.getX(), ':');
 				playerPos.moveUp();
-				players.get(index).incrementScore();
 				this.interact = true;
 			}
 			break;
@@ -205,7 +248,6 @@ public class GameEngine {
 				board.get(playerPos.getY() + 1).set(playerPos.getX(), 'c');
 				board.get(playerPos.getY() + 2).set(playerPos.getX(), ':');
 				playerPos.moveDown();
-				players.get(index).incrementScore();
 				this.interact = true;
 			}
 			break;
@@ -227,7 +269,6 @@ public class GameEngine {
 				board.get(playerPos.getY()).set(playerPos.getX() - 1, 'c');
 				board.get(playerPos.getY()).set(playerPos.getX() - 2, ':');
 				playerPos.moveLeft();
-				players.get(index).incrementScore();
 				this.interact = true;
 			}
 			break;
@@ -249,7 +290,6 @@ public class GameEngine {
 				board.get(playerPos.getY()).set(playerPos.getX() + 1, 'c');
 				board.get(playerPos.getY()).set(playerPos.getX() + 2, ':');
 				playerPos.moveRight();
-				players.get(index).incrementScore();
 				this.interact = true;
 			}
 			break;
@@ -281,13 +321,19 @@ public class GameEngine {
 	public ArrayList<ArrayList<Character>> getBoard() {
 		return board;
 	}
+
+	/**
+	 * @return the height of the board.
+	 */
+	public int getHeight() {
+		return height;
+	}
 	
 	/**
-	 * Provides the rectangular board size
-	 * @return the size of the board
+	 * @return the width of the board.
 	 */
-	public int getBoardSize() {
-		return boardSize;
+	public int getWidth() {
+		return width;
 	}
 	
 }

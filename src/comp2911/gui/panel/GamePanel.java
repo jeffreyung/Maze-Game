@@ -138,9 +138,10 @@ public class GamePanel extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		final int boardSize = gameEngine.getBoardSize();
+		final int width = gameEngine.getWidth();
+		final int height = gameEngine.getHeight();
 		final int tileSize = Constants.TILE_SIZE;
-		this.createTiles(boardSize, boardSize, tileSize);
+		this.createTiles(width, height, tileSize);
 		Graphics2D g2d = (Graphics2D) g.create();
 		for (Tile tile : tiles) {
 			g2d.setColor(tile.color);
