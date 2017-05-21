@@ -1,6 +1,7 @@
 package comp2911.game;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Jeffrey Ung
@@ -11,7 +12,12 @@ public class Solver {
 	 * The initial 2-Dimensional board.
 	 */
 	private ArrayList<ArrayList<Character>> board;
-
+	
+	/**
+	 * List of static objects excluding the goal.
+	 */
+	List<Character> staticObj;
+	
 	/**
 	 * The board height.
 	 */
@@ -33,6 +39,10 @@ public class Solver {
 	 */
 	public Solver(ArrayList<ArrayList<Character>> board, int width, int height) {
 		this.initNewGame(board, width, height);
+		this.staticObj = new ArrayList<Character>();
+		this.staticObj.add('|');
+		this.staticObj.add('.');
+		this.staticObj.add(':');
 	}
 	
 	/**
@@ -47,13 +57,37 @@ public class Solver {
 	}
 	
 	/**
+	 * Checks if the board is solvable i.e., if a crate is stuck.
+	 * @return true if it is solvable.
+	 */
+	public boolean isSolvable() {
+		int count = 0;
+		for(int x = 0; x < this.width; x++) {
+			for(int y = 0; y < this.height; y++) {
+				if(board.get(y).get(x) == '.') {
+					if((staticObj.contains(board.get(y + 1).get(x))
+							&& staticObj.contains(board.get(y).get(x + 1))) ||
+							(staticObj.contains(board.get(y + 1).get(x))
+							&& staticObj.contains(board.get(y).get(x - 1))) ||
+							(staticObj.contains(board.get(y - 1).get(x))
+							&& staticObj.contains(board.get(y).get(x + 1))) ||
+							(staticObj.contains(board.get(y - 1).get(x))
+							&& staticObj.contains(board.get(y).get(x - 1))))
+						count++;
+				}
+			}
+		}
+		return count != this.goalTotal;
+	}
+	
+	/**
 	 * Updates the goal total;
 	 */
 	public void updateGoalTotal() {
 		this.goalTotal = 0;
-		for (int x = 0; x < this.width; x++)
-			for (int y = 0; y < this.height; y++)
-				if (board.get(y).get(x) == 'x')
+		for(int x = 0; x < this.width; x++)
+			for(int y = 0; y < this.height; y++)
+				if(board.get(y).get(x) == 'x')
 					this.goalTotal++;
 	}
 	
@@ -63,9 +97,9 @@ public class Solver {
 	 */
 	public int getScore() {
 		int count = 0;
-		for (int x = 0; x < this.width; x++) {
-			for (int y = 0; y < this.height; y++) {
-				if (board.get(y).get(x) == ':')
+		for(int x = 0; x < this.width; x++) {
+			for(int y = 0; y < this.height; y++) {
+				if(board.get(y).get(x) == ':')
 					count++;
 			}
 		}
