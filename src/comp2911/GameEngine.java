@@ -172,6 +172,7 @@ public class GameEngine {
 			tileType2 = getTileType(playerPos.getX(), playerPos.getY() - 2);
 			if (tileType2 == ' ') {
 				board.get(playerPos.getY()).set(playerPos.getX(), player.isStandingOnGoal() ? 'x' : ' ');
+				this.players.get(index).setStandingOnGoal(tileType1 == ':');
 				board.get(playerPos.getY() - 1).set(playerPos.getX(), 'c');
 				board.get(playerPos.getY() - 2).set(playerPos.getX(), '.');
 				playerPos.moveUp();
@@ -193,6 +194,7 @@ public class GameEngine {
 			tileType2 = getTileType(playerPos.getX(), playerPos.getY() + 2);
 			if(tileType2 == ' ') {
 				board.get(playerPos.getY()).set(playerPos.getX(), player.isStandingOnGoal() ? 'x' : ' ');
+				this.players.get(index).setStandingOnGoal(tileType1 == ':');
 				board.get(playerPos.getY() + 1).set(playerPos.getX(), 'c');
 				board.get(playerPos.getY() + 2).set(playerPos.getX(), '.');
 				playerPos.moveDown();
@@ -214,6 +216,7 @@ public class GameEngine {
 			tileType2 = getTileType(playerPos.getX() - 2, playerPos.getY());
 			if(tileType2 == ' ') {
 				board.get(playerPos.getY()).set(playerPos.getX(), player.isStandingOnGoal() ? 'x' : ' ');
+				this.players.get(index).setStandingOnGoal(tileType1 == ':');
 				board.get(playerPos.getY()).set(playerPos.getX() - 1, 'c');
 				board.get(playerPos.getY()).set(playerPos.getX() - 2, '.');
 				playerPos.moveLeft();
@@ -234,7 +237,8 @@ public class GameEngine {
 				return;
 			tileType2 = getTileType(playerPos.getX() + 2, playerPos.getY());
 			if(tileType2 == ' ') {
-				board.get(playerPos.getY()).set(playerPos.getX(), ' ');
+				board.get(playerPos.getY()).set(playerPos.getX(), player.isStandingOnGoal() ? 'x' : ' ');
+				this.players.get(index).setStandingOnGoal(tileType1 == ':');
 				board.get(playerPos.getY()).set(playerPos.getX() + 1, 'c');
 				board.get(playerPos.getY()).set(playerPos.getX() + 2, '.');
 				playerPos.moveRight();
