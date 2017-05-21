@@ -30,6 +30,7 @@ public class MapGenerator implements MapInterface{
 	public ArrayList<ArrayList<Character>> createBoard() {
 		int size = 7;
 		boardSize = size;
+		map.clear();
 		initMap(size);
 		
 		for(int i = 0; i < size; i++) {
