@@ -49,7 +49,7 @@ public class Score {
 				file.createNewFile();
 			reader = new BufferedReader(new FileReader(file));
 			String line;
-			while ((line = reader.readLine()) != null) {
+			while((line = reader.readLine()) != null) {
 				scores.add(line);
 			}
 		} catch(IOException e) {
@@ -74,12 +74,12 @@ public class Score {
 		BufferedWriter writer = null;
 		try {
 			File file = new File(Constants.SCORES_DIR + "/" + level + ".txt");
-			if (!file.exists())
+			if(!file.exists())
 				file.createNewFile();
 			FileWriter fw = new FileWriter(file);
 			writer = new BufferedWriter(fw);
-			for (String s : scores) {
-				writer.write(s);
+			for(String s : scores) {
+				writer.write(s + "\n");
 			}
 		} catch(IOException e) {
 		} finally { 
