@@ -72,7 +72,7 @@ public class StartPanel extends JPanel {
 			this.swingUI.switchPanel(new RulesPanel(this.swingUI));
 			break;
 		case "scoreboard":
-			this.swingUI.switchPanel(new ScoreboardPanel(this.swingUI));
+			this.swingUI.switchPanel(new ScoreboardPanel(this.swingUI, swingUI.getScores()));
 			break;
 		case "exit":
 			System.exit(0);

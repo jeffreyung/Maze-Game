@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import comp2911.Constants;
 
@@ -20,7 +21,7 @@ public class Score {
 	/**
 	 * The scores of the current level in the format "<score>\t<username>".
 	 */
-	private List<String> scores;
+	private PriorityQueue<String> scores;
 	
 	/**
 	 * The level.
@@ -31,7 +32,7 @@ public class Score {
 	 * Constructs a new Score object.
 	 */
 	public Score(int level) {
-		this.scores = new ArrayList<String>(Constants.SCOREBOARD_SIZE);
+		this.scores = new PriorityQueue<String>(Constants.SCOREBOARD_SIZE);
 		this.level = level;
 	}
 
@@ -70,7 +71,7 @@ public class Score {
 	 */
 	public void writeScoreData(String username, int score) {
 		scores.add(score + "\t" + username);
-		Collections.sort(scores, Collections.reverseOrder());
+		//Collections.sort(scores, Collections.reverseOrder());
 		BufferedWriter writer = null;
 		try {
 			File file = new File(Constants.SCORES_DIR + "/" + level + ".txt");

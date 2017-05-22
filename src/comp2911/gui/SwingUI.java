@@ -4,12 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.PriorityQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
 import comp2911.Constants;
+import comp2911.game.Score;
 import comp2911.gui.panel.ScorePanel;
 import comp2911.gui.panel.StartPanel;
 
@@ -48,6 +50,13 @@ public class SwingUI extends JFrame {
 	 * If game has started.
 	 */
 	private boolean gameStart;
+	
+	
+	private PriorityQueue<String> scores;
+	
+	public PriorityQueue<String> getScores() {
+		return this.scores;
+	}
 	
 	/**
 	 * Constructs the SwingUI class.
