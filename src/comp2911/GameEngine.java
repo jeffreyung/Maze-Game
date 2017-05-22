@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import comp2911.game.Direction;
-import comp2911.game.MapGenerator;
+import comp2911.game.MapInterface;
 import comp2911.game.Player;
 import comp2911.game.Position;
 import comp2911.game.Score;
@@ -26,7 +26,7 @@ public class GameEngine {
 	/**
 	 * Map generator.
 	 */
-	private MapGenerator mapGenerator;
+	private MapInterface mapGenerator;
 	
 	/**
 	 * Swing user input.
@@ -138,7 +138,7 @@ public class GameEngine {
 			Logger.getLogger(UserInput.class.getName()).info("Moving (" + playerPos.getX() + ", " + playerPos.getY() + ")");
 		if(solver.isGameComplete())
 			this.completeGame(index);
-		else if (!solver.isSolvable()) {
+		else if(!solver.isSolvable()) {
 			System.out.println();
 			Logger.getLogger(UserInput.class.getName()).info("Game over - no crates can be moved.");
 			System.out.println();

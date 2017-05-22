@@ -32,14 +32,15 @@ public class Solver {
 	 * The total goal(s) of the current board.
 	 */
 	private int goalTotal;
+
 	
 	/**
 	 * Constructs the solver class.
 	 * @param board is the first game board.
 	 */
 	public Solver(ArrayList<ArrayList<Character>> board, int width, int height) {
-		this.initNewGame(board, width, height);
 		this.staticObj = new ArrayList<Character>();
+		this.initNewGame(board, width, height);
 		this.staticObj.add('|');
 		this.staticObj.add('.');
 		this.staticObj.add(':');
