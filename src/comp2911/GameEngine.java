@@ -84,6 +84,7 @@ public class GameEngine {
 		this.generateBoard(level); // generate board for level 1
 		this.players = new ArrayList<Player>(Constants.MAX_PLAYERS);
 		this.scoreHandler.readScoreData();
+		this.addPlayer("username"); // TODO handle username system
 	}
 	
 	/**
