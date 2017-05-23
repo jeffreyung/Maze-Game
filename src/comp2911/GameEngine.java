@@ -11,7 +11,7 @@ import comp2911.game.Direction;
 import comp2911.game.MapInterface;
 import comp2911.game.Player;
 import comp2911.game.Position;
-import comp2911.game.Score;
+import comp2911.game.ScoreHandler;
 import comp2911.game.Solver;
 import comp2911.gui.SwingUI;
 import comp2911.gui.UserInput;
@@ -36,7 +36,7 @@ public class GameEngine {
 	/**
 	 * The score handler.
 	 */
-	private Score score;
+	private ScoreHandler scoreHandler;
 	
 	/**
 	 * The solver.
@@ -79,6 +79,7 @@ public class GameEngine {
 	public GameEngine(SwingUI swingUI) {
 		this.swingUI = swingUI;
 		this.mapGenerator = new comp2911.game.MapGenerator();
+		this.scoreHandler = new ScoreHandler();
 		this.level = 1;
 		this.generateBoard(level); // generate board for level 1
 		this.players = new ArrayList<Player>(Constants.MAX_PLAYERS);
@@ -90,11 +91,10 @@ public class GameEngine {
 	 * @param level of the game.
 	 */
 	public void generateBoard(int level) {
-		this.score = new Score(level);
 		this.board = this.mapGenerator.createBoard();
 		this.width = this.mapGenerator.getBoardSize();
 		this.height = this.mapGenerator.getBoardSize();
-		this.score.readScoreData();
+		this.scoreHandler.readScoreData();
 		this.solver = new Solver(board, width, height);
 	}
 	
@@ -106,8 +106,7 @@ public class GameEngine {
 		Player player = this.players.get(index);
 		if (player.isCompleteGame())
 			return;
-		//TODO
-		this.score.writeScoreData(player.getUsername(), player.getScore());
+		this.scoreHandler.writeScoreData(player.getUsername(), player.getScore());
 		player.setCompleteGame(true);
 		if(Constants.DEBUG_MODE)
 			Logger.getLogger(UserInput.class.getName()).info("Generating new board...");
@@ -139,7 +138,6 @@ public class GameEngine {
 		if(solver.isGameComplete())
 			this.completeGame(index);
 		else if(!solver.isSolvable()) {
-			System.out.println();
 			Logger.getLogger(UserInput.class.getName()).info("Game over - no crates can be moved.");
 			System.out.println();
 		}

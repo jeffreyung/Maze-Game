@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
 import comp2911.Constants;
-import comp2911.game.Score;
 import comp2911.gui.panel.ScorePanel;
 import comp2911.gui.panel.StartPanel;
 

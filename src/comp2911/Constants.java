@@ -21,16 +21,6 @@ public class Constants {
 	public static final int TILE_SIZE = 40;
 	
 	/**
-	 * The maximum list size for the scoreboard.
-	 */
-	public static final int SCOREBOARD_SIZE = 10;
-	
-	/**
-	 * The scores directory.
-	 */
-	public static final String SCORES_DIR = "./data/scores";
-	
-	/**
 	 * The image directory.
 	 */
 	public static final String IMAGES_DIR = "./data/img";

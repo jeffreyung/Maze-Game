@@ -2,12 +2,11 @@ package comp2911.gui.panel;
 
 import javax.swing.JPanel;
 
+import comp2911.game.ScoreData;
+import comp2911.game.ScoreHandler;
 import comp2911.gui.SwingUI;
-import java.util.ArrayList;
 import java.util.PriorityQueue;
 
-import comp2911.game.Score;
-import comp2911.game.Player;
 import javax.swing.JLabel;
 
 /**
@@ -16,29 +15,42 @@ import javax.swing.JLabel;
 @SuppressWarnings("serial")
 public class ScoreboardPanel extends JPanel {
 
+	/**
+	 * The swing user interface.
+	 */
+	private SwingUI swingUI;
 	
-	public ScoreboardPanel(SwingUI swingUI, PriorityQueue<String> scores) {
-		// TODO Auto-generated constructor stub
-		
-		PriorityQueue<String> topScores = scores;
-		
-		int countTopFive = 5;
-		String whole = null;
-		
-		while(countTopFive > 0 || !scores.isEmpty()) {
-			String newScore = null;
-			newScore = topScores.poll();
-			String[] splitLine = newScore.split("\t");
-
-			String name = splitLine[0];
-			whole = whole + name + ' ';
-			String score = splitLine[1];
-			whole = whole + score + '\n';
-		}
-		JLabel label = new JLabel(whole);
-		this.add(label);
+	/**
+	 * The score handler.
+	 */
+	private ScoreHandler score;
+	
+	/**
+	 * Constructs the score board panel.
+	 * @param swingUI
+	 */
+	public ScoreboardPanel(SwingUI swingUI) {
+		this.swingUI = swingUI;
+		this.score = new ScoreHandler();
+		this.score.readScoreData();
+		this.init();
 	}
 	
+	/**
+	 * Initializes the top score board.
+	 */
+	private void init() {
+		PriorityQueue<ScoreData> topScores = score.getScores();
+		int count = 1;
+		String whole = "<html><b><font size=\"14\" color=\"black\"> Top Five Scores<font></b><br><br>";
+		while(count <= 5 && !topScores.isEmpty()) {
+			ScoreData s = topScores.poll();
+			whole += count + ".&nbsp;&nbsp;&nbsp;&nbsp;" + s.getScore() + "&nbsp;&nbsp;" + s.getUsername()+ "<br>";
+			count++;
+		}
+		whole += "</html>";
+		this.add(new JLabel(whole));
+	}
 	
 
 }
