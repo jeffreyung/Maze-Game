@@ -21,6 +21,11 @@ import comp2911.gui.panel.StartPanel;
 public class SwingUI extends JFrame {
 
 	/**
+	 * The menu panel.
+	 */
+	private JPanel startPanel;
+	
+	/**
 	 * The current panel.
 	 */
 	private JPanel panel;
@@ -66,6 +71,7 @@ public class SwingUI extends JFrame {
 		this.rightPanel = new JPanel();
 		this.topPanel = new JPanel();
 		this.botPanel = new JPanel();
+		this.setStartPanel(panel);
 		this.setGameStart(false);
 	}
 	
@@ -132,9 +138,10 @@ public class SwingUI extends JFrame {
 	/**
 	 * Updates the current interface of the panel.
 	 * The current panel should be the game panel.
+	 * @param the current score of the player.
 	 */
-	public void updateInterface() {
-		this.scorePanel.updateScore();
+	public void updateInterface(int score) {
+		this.scorePanel.updateScore(score);
 		this.repaint();
 		this.getPanel().repaint();
 	}
@@ -152,6 +159,20 @@ public class SwingUI extends JFrame {
 	 */
 	public void setGameStart(boolean gameStart) {
 		this.gameStart = gameStart;
+	}
+
+	/**
+	 * @return the startPanel
+	 */
+	public JPanel getStartPanel() {
+		return startPanel;
+	}
+
+	/**
+	 * @param startPanel the startPanel to set
+	 */
+	public void setStartPanel(JPanel startPanel) {
+		this.startPanel = startPanel;
 	}
 
 }

@@ -84,6 +84,7 @@ public class GameEngine {
 		this.generateBoard(level); // generate board for level 1
 		this.players = new ArrayList<Player>(Constants.MAX_PLAYERS);
 		this.addPlayer("username"); // TODO handle username system
+		this.scoreHandler.readScoreData();
 	}
 	
 	/**
@@ -94,7 +95,6 @@ public class GameEngine {
 		this.board = this.mapGenerator.createBoard();
 		this.width = this.mapGenerator.getBoardSize();
 		this.height = this.mapGenerator.getBoardSize();
-		this.scoreHandler.readScoreData();
 		this.solver = new Solver(board, width, height);
 	}
 	
@@ -106,7 +106,8 @@ public class GameEngine {
 		Player player = this.players.get(index);
 		if (player.isCompleteGame())
 			return;
-		this.scoreHandler.writeScoreData(player.getUsername(), player.getScore());
+		player.addScore(solver.getScore());
+		this.scoreHandler.updateTopScore(player.getUsername(), player.getScore());
 		player.setCompleteGame(true);
 		if(Constants.DEBUG_MODE)
 			Logger.getLogger(UserInput.class.getName()).info("Generating new board...");
@@ -116,7 +117,7 @@ public class GameEngine {
 				generateBoard(level++);
 				solver.initNewGame(board, width, height);
 				player.setPosition(mapGenerator.getInitialCharPos());
-				swingUI.updateInterface();
+				swingUI.updateInterface(player.getScore());
 				player.setCompleteGame(false);
 		    }
 		}, 1, TimeUnit.SECONDS);
@@ -128,11 +129,14 @@ public class GameEngine {
 	 * @param dir is the direction to be moved.
 	 */
 	public void sendUserDirection(int index, Direction dir) {
-		Position playerPos = this.players.get(index).getPosition();
+		Player player = this.players.get(index);
+		Position playerPos = player.getPosition();
+		if (player.isCompleteGame())
+			return;
 		this.interact = false;
 		this.interactEmptyTile(index, dir);
 		this.interactCrate(index, dir);
-		this.swingUI.updateInterface();
+		this.swingUI.updateInterface(solver.getScore() + player.getScore());
 		if(Constants.DEBUG_MODE)
 			Logger.getLogger(UserInput.class.getName()).info("Moving (" + playerPos.getX() + ", " + playerPos.getY() + ")");
 		if(solver.isGameComplete())
@@ -308,6 +312,8 @@ public class GameEngine {
 		Player player = new Player(this.players.size());
 		this.players.add(player);
 		player.setPosition(this.mapGenerator.getInitialCharPos());
+		player.setUsername(username);
+		this.scoreHandler.addNewScore(username);
 	}
 	
 	/**

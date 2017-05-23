@@ -63,6 +63,7 @@ public class GamePanel extends JPanel {
 		this.userInput = new UserInput(this.gameEngine);
 		this.tiles = new ArrayList<Tile>();
 		this.attribute = new HashMap<Character, BufferedImage>();
+		this.swingUI.updateInterface(0);
 		this.init();
 	}
 

@@ -21,7 +21,7 @@ public class Player {
 	private String username;
 	
 	/**
-	 * The player's current score.
+	 * The player's incremented score after completing game.
 	 */
 	private int score;
 	
@@ -84,28 +84,7 @@ public class Player {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
-	/**
-	 * @return the score.
-	 */
-	public int getScore() {
-		return score;
-	}
-
-	/**
-	 * Increments the player's score.
-	 */
-	public void incrementScore() {
-		this.score++;
-	}
 	
-	/**
-	 * Decrements the player's score.
-	 */
-	public void decrementScore() {
-		this.score--;
-	}
-
 	/**
 	 * @return if the player is standing on the goal.
 	 */
@@ -132,5 +111,19 @@ public class Player {
 	 */
 	public void setCompleteGame(boolean completeGame) {
 		this.completeGame = completeGame;
+	}
+
+	/**
+	 * @return the score.
+	 */
+	public int getScore() {
+		return score;
+	}
+
+	/**
+	 * @param score the score to add.
+	 */
+	public void addScore(int score) {
+		this.score += score;
 	}
 }

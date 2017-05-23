@@ -53,14 +53,9 @@ public class ScoreHandler {
 	}
 
 	/**
-	 * The file corresponding to the level is to be re-written to what is
-	 * in the scores map in descending order of scores.
-	 * This is to be called after a level is completed.
-	 * @param username of the player.
-	 * @param score of the player has got.
+	 * The file is to be re-written to what is on the score list.
 	 */
-	public void writeScoreData(String username, int score) {
-		scores.add(new ScoreData(username, score));
+	public void writeScoreData() {
 		BufferedWriter writer = null;
 		try {
 			File file = new File("./data/score/scoreboard.txt");
@@ -68,9 +63,8 @@ public class ScoreHandler {
 				file.createNewFile();
 			FileWriter fw = new FileWriter(file);
 			writer = new BufferedWriter(fw);
-			for(ScoreData s : scores) {
+			for (ScoreData s : scores)
 				writer.write(s.getScore() + "\t" + s.getUsername() + "\n");
-			}
 		} catch(IOException e) {
 		} finally { 
 			try {
@@ -78,6 +72,30 @@ public class ScoreHandler {
 			} catch(IOException e) {
 			}
 		}
+	}
+	
+	/**
+	 * Updates the scores list if the player scores a high score than previous.
+	 * @param username of the player.
+	 * @param score of the player has got.
+	 */
+	public void updateTopScore(String username, int score) {
+		for (ScoreData s : scores) {
+			if (s.getUsername().equals(username) && score > s.getScore()) {
+				s.setScore(score);
+				this.writeScoreData();
+			}
+		}
+	}
+	
+	/**
+	 * Adds a new player if they are not on the score board list.
+	 */
+	public void addNewScore(String username) {
+		for (ScoreData s : scores)
+			if (s.getUsername().equals(username))
+				return;
+		scores.add(new ScoreData(username, 0));
 	}
 	
 	/**
