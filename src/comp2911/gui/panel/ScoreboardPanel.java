@@ -48,10 +48,12 @@ public class ScoreBoardPanel extends JPanel {
 		JButton exit = new JButton("Return to main menu");
 		PriorityQueue<ScoreData> topScores = score.getScores();
 		int count = 1;
-		String whole = "<html><b><font size=\"14\" color=\"black\"> Top Five Scores<font></b><br><br>";
+		String whole = "<html><b><font size=\"14\" color=\"black\"> Top Five Scores<font></b><br><br>"
+				+ "Rank  Score  Name<br>";
 		while(count <= 5 && !topScores.isEmpty()) {
 			ScoreData s = topScores.poll();
-			whole += count + ".&nbsp;&nbsp;&nbsp;&nbsp;" + s.getScore() + "&nbsp;&nbsp;" + s.getUsername()+ "<br>";
+			whole += count + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + s.getScore() +
+					"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + s.getUsername()+ "<br>";
 			count++;
 		}
 		whole += "</html>";
