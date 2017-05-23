@@ -21,6 +21,16 @@ import comp2911.gui.panel.StartPanel;
 public class SwingUI extends JFrame {
 
 	/**
+	 * The default width.
+	 */
+	public static int DEFAULT_WIDTH = 600;
+	
+	/**
+	 * The default height.
+	 */
+	public static int DEFAULT_HEIGHT = 600;
+	
+	/**
 	 * The menu panel.
 	 */
 	private JPanel startPanel;
@@ -85,8 +95,8 @@ public class SwingUI extends JFrame {
 			this.setLayout(new BorderLayout());
 			this.setTitle(Constants.GAME_NAME);
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			this.setPreferredSize(new Dimension(600, 600));
-			this.getPanel().setLayout(new GridLayout(4, 0));
+			this.setPreferredSize(new Dimension(SwingUI.DEFAULT_WIDTH, SwingUI.DEFAULT_HEIGHT));
+			this.getPanel().setLayout(new GridLayout(4, 0, 0, 20));
 			this.scorePanel.setPreferredSize(new Dimension(100, 100));
 			this.rightPanel.setPreferredSize(new Dimension(100, 100));
 			this.topPanel.setPreferredSize(new Dimension(50, 50));
@@ -165,6 +175,7 @@ public class SwingUI extends JFrame {
 	 * @return the startPanel
 	 */
 	public JPanel getStartPanel() {
+		this.setPreferredSize(new Dimension(SwingUI.DEFAULT_WIDTH, SwingUI.DEFAULT_HEIGHT));
 		return startPanel;
 	}
 

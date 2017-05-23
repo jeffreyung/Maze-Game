@@ -1,6 +1,7 @@
 package comp2911.gui.panel;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -57,13 +58,14 @@ public class GamePanel extends JPanel {
 	 * The constructor of the StartScreen class
 	 * @param swingUI 
 	 */
-	public GamePanel(SwingUI swingUI) {
+	public GamePanel(SwingUI swingUI, String username) {
 		this.swingUI = swingUI;
 		this.gameEngine = new GameEngine(this.swingUI);
 		this.userInput = new UserInput(this.gameEngine);
 		this.tiles = new ArrayList<Tile>();
 		this.attribute = new HashMap<Character, BufferedImage>();
 		this.swingUI.updateInterface(0);
+		this.gameEngine.addPlayer(username);
 		this.init();
 	}
 
@@ -74,6 +76,7 @@ public class GamePanel extends JPanel {
 		this.addKeyListener(this.userInput);
 		this.swingUI.addKeyListener(this.userInput);
 		this.swingUI.setGameStart(true);
+		this.swingUI.setPreferredSize(new Dimension(SwingUI.DEFAULT_WIDTH, SwingUI.DEFAULT_HEIGHT));
 		this.setFocusable(true);
 		this.requestFocusInWindow();
 		this.setBackground(Color.BLACK);
