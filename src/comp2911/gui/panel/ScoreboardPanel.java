@@ -7,6 +7,7 @@ import comp2911.game.ScoreHandler;
 import comp2911.gui.SwingUI;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.PriorityQueue;
@@ -37,6 +38,7 @@ public class ScoreBoardPanel extends JPanel {
 	public ScoreBoardPanel(SwingUI swingUI) {
 		this.swingUI = swingUI;
 		this.score = new ScoreHandler();
+		this.setBackground(Color.BLACK);
 		this.score.readScoreData();
 		this.init();
 	}
@@ -48,10 +50,12 @@ public class ScoreBoardPanel extends JPanel {
 		JButton exit = new JButton("Return to main menu");
 		PriorityQueue<ScoreData> topScores = score.getScores();
 		int count = 1;
-		String whole = "<html><b><font size=\"14\" color=\"black\"> Top Five Scores<font></b><br><br>";
+		String whole = "<html><b><font size=\"14\" color=\"black\"> Top Five Scores<font></b><br><br>"
+				+ "Rank  Score  Name<br>";
 		while(count <= 5 && !topScores.isEmpty()) {
 			ScoreData s = topScores.poll();
-			whole += count + ".&nbsp;&nbsp;&nbsp;&nbsp;" + s.getScore() + "&nbsp;&nbsp;" + s.getUsername()+ "<br>";
+			whole += count + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + s.getScore() +
+					"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + s.getUsername()+ "<br>";
 			count++;
 		}
 		whole += "</html>";
@@ -64,6 +68,5 @@ public class ScoreBoardPanel extends JPanel {
 		this.add(new JLabel(whole));
 		this.add(exit, BorderLayout.SOUTH);
 	}
-	
 
 }

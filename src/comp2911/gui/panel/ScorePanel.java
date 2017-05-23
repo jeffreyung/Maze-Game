@@ -1,9 +1,9 @@
 package comp2911.gui.panel;
 
+import java.awt.Color;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import comp2911.gui.SwingUI;
 
 /**
  * @author Jeffrey Ung
@@ -12,11 +12,6 @@ import comp2911.gui.SwingUI;
 public class ScorePanel extends JPanel {
 
 	/**
-	 * The swing UI.
-	 */
-	private SwingUI swingUI;
-	
-	/**
 	 * The current score text".
 	 */
 	private JLabel label;
@@ -24,17 +19,25 @@ public class ScorePanel extends JPanel {
 	/**
 	 * Constructs the score panel.
 	 */
-	public ScorePanel(SwingUI swingUI) {
-		this.swingUI = swingUI;
+	public ScorePanel() {
 		this.label = new JLabel();
+		this.setBackground(Color.BLACK);
 		this.add(label);
 	}
 	
 	/**
 	 * Updates the score panel.
 	 */
-	public void updateScore(int score) {
-		label.setText("<html><font color=\"white\"> Score: " + score + "</font></html>");
+	public void updateScore(int score, int hiscore) {
+		label.setText("<html><font color=\"white\"> <b>Current score:</b><br>" + score + "<br>"
+				+ "<br><br><b>My top score:</b><br>" + hiscore + "</font></html>");
+	}
+	
+	/**
+	 * Updates the score panel by removing the text.
+	 */
+	public void clear() {
+		label.setText("");
 	}
 	
 }

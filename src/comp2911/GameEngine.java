@@ -74,17 +74,22 @@ public class GameEngine {
 	private int level;
 	
 	/**
+	 * The game pause.
+	 */
+	private boolean pause;
+	
+	/**
 	 * Constructs a new GameEngine and initializes the variables.
 	 */
 	public GameEngine(SwingUI swingUI) {
 		this.swingUI = swingUI;
+		this.pause = false;
 		this.mapGenerator = new comp2911.game.MapGenerator();
 		this.scoreHandler = new ScoreHandler();
 		this.level = 1;
 		this.generateBoard(level); // generate board for level 1
 		this.players = new ArrayList<Player>(Constants.MAX_PLAYERS);
 		this.scoreHandler.readScoreData();
-		this.addPlayer("username"); // TODO handle username system
 	}
 	
 	/**
@@ -117,7 +122,8 @@ public class GameEngine {
 				generateBoard(level++);
 				solver.initNewGame(board, width, height);
 				player.setPosition(mapGenerator.getInitialCharPos());
-				swingUI.updateInterface(player.getScore());
+				swingUI.updateInterface(solver.getScore() + player.getScore(),
+						scoreHandler.getTopScore(player.getUsername()));
 				player.setCompleteGame(false);
 		    }
 		}, 1, TimeUnit.SECONDS);
@@ -131,14 +137,16 @@ public class GameEngine {
 	public void sendUserDirection(int index, Direction dir) {
 		Player player = this.players.get(index);
 		Position playerPos = player.getPosition();
-		if (player.isCompleteGame())
+		if (player.isCompleteGame() || this.pause)
 			return;
 		this.interact = false;
 		this.interactEmptyTile(index, dir);
 		this.interactCrate(index, dir);
-		this.swingUI.updateInterface(solver.getScore() + player.getScore());
+		this.swingUI.updateInterface(solver.getScore() + player.getScore(),
+				scoreHandler.getTopScore(player.getUsername()));
 		if(Constants.DEBUG_MODE)
-			Logger.getLogger(UserInput.class.getName()).info("Moving (" + playerPos.getX() + ", " + playerPos.getY() + ")");
+			Logger.getLogger(UserInput.class.getName()).info("Moving (" + playerPos.getX() + ","
+					+ playerPos.getY() + ")");
 		if(solver.isGameComplete())
 			this.completeGame(index);
 		else if(!solver.isSolvable()) {
@@ -303,6 +311,14 @@ public class GameEngine {
 			break;
 		}
 	}
+	
+	/**
+	 * Pause the game.
+	 */
+	public void pause() {
+		this.pause ^= true;
+		this.swingUI.repaint();
+	}
 
 	/**
 	 * Adds a new player to the game.
@@ -346,4 +362,24 @@ public class GameEngine {
 		return width;
 	}
 	
+	/**
+	 * @return the score handler.
+	 */
+	public ScoreHandler getScoreHandler() {
+		return scoreHandler;
+	}
+
+	/**
+	 * @return the pause
+	 */
+	public boolean isPause() {
+		return pause;
+	}
+
+	/**
+	 * @param pause the pause to set
+	 */
+	public void setPause(boolean pause) {
+		this.pause = pause;
+	}
 }

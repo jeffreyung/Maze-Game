@@ -45,6 +45,11 @@ public class GamePanel extends JPanel {
 	private GameEngine gameEngine;
 	
 	/**
+	 * The pause panel.
+	 */
+	private PausePanel pausePanel;
+	
+	/**
 	 * The list of tiles.
 	 */
 	private List<Tile> tiles;
@@ -53,7 +58,7 @@ public class GamePanel extends JPanel {
 	 * The images of characters.
 	 */
 	private Map<Character, BufferedImage> attribute;
-	
+
 	/**
 	 * The constructor of the StartScreen class
 	 * @param swingUI 
@@ -61,10 +66,11 @@ public class GamePanel extends JPanel {
 	public GamePanel(SwingUI swingUI, String username) {
 		this.swingUI = swingUI;
 		this.gameEngine = new GameEngine(this.swingUI);
+		this.pausePanel = new PausePanel(this.swingUI, this);
 		this.userInput = new UserInput(this.gameEngine);
 		this.tiles = new ArrayList<Tile>();
 		this.attribute = new HashMap<Character, BufferedImage>();
-		this.swingUI.updateInterface(0);
+		this.swingUI.updateInterface(0, gameEngine.getScoreHandler().getTopScore(username));
 		this.gameEngine.addPlayer(username);
 		this.init();
 	}
@@ -141,6 +147,10 @@ public class GamePanel extends JPanel {
 	 */
 	@Override
 	protected void paintComponent(Graphics g) {
+		if (gameEngine.isPause()) {
+			this.swingUI.switchPanel(pausePanel);
+			return;
+		}
 		super.paintComponent(g);
 		final int width = gameEngine.getWidth();
 		final int height = gameEngine.getHeight();
@@ -157,7 +167,7 @@ public class GamePanel extends JPanel {
 		g2d.dispose();
 		this.tiles.clear();
 	}
-	
+
 	/**
 	 * The Tile class contains data of a tile such as the color and the the shape.
 	 */
@@ -171,6 +181,13 @@ public class GamePanel extends JPanel {
 			this.image = image;
 			this.shape = shape;
 		}
+	}
+	
+	/**
+	 * The game engine.
+	 */
+	public GameEngine getGameEngine() {
+		return gameEngine;
 	}
 
 }

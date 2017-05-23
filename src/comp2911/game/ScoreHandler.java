@@ -89,6 +89,17 @@ public class ScoreHandler {
 	}
 	
 	/**
+	 * @param username of the player whose top score is to be found.
+	 * @return the top score of the corresponding username.
+	 */
+	public int getTopScore(String username) {
+		for (ScoreData s : scores)
+			if (s.getUsername().equals(username))
+				return s.getScore();
+		return 0;
+	}
+	
+	/**
 	 * Adds a new player if they are not on the score board list.
 	 */
 	public void addNewScore(String username) {

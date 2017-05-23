@@ -1,6 +1,7 @@
 package comp2911.gui.panel;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -47,6 +48,7 @@ public class EnterUserPanel extends JPanel {
 		this.username = new JTextField();
 		this.enter = new JButton("Enter");
 		this.exit = new JButton("Return to main menu");
+		this.setBackground(Color.BLACK);
 		this.init();
 	}
 	
@@ -60,13 +62,16 @@ public class EnterUserPanel extends JPanel {
 		this.setLayout(new BorderLayout());
 		this.username.setColumns(8);
 		swingUI.setPreferredSize(new Dimension(600, 300));
+		username.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				startGamePanel();
+			}
+		});
 		enter.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				String name = username.getText();
-				if (name.equals(""))
-					name = "un-named";
-				swingUI.switchPanel(new GamePanel(swingUI, name));
+				startGamePanel();
 			}
 		});
 		exit.addActionListener(new ActionListener() {
@@ -82,6 +87,16 @@ public class EnterUserPanel extends JPanel {
 		subPanel2.add(exit);
 		this.add(subPanel1, BorderLayout.CENTER);
 		this.add(subPanel2, BorderLayout.SOUTH);
+	}
+	
+	/**
+	 * Start the game panel.
+	 */
+	public void startGamePanel() {
+		String name = username.getText();
+		if (name.equals(""))
+			name = "un-named";
+		swingUI.switchPanel(new GamePanel(swingUI, name));
 	}
 	
 }

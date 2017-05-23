@@ -57,6 +57,9 @@ public class UserInput implements KeyListener {
 		case KeyEvent.VK_RIGHT:
 			this.gameEngine.sendUserDirection(0, Direction.RIGHT);
 			break;
+		case KeyEvent.VK_ESCAPE:
+			this.gameEngine.pause();
+			break;
 		default:
 			if (Constants.DEBUG_MODE)
 				Logger.getLogger(UserInput.class.getName()).info("Unhandled: " + KeyEvent.getKeyText(e.getKeyCode()));

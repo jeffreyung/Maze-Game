@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.util.PriorityQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -60,24 +59,18 @@ public class SwingUI extends JFrame {
 	 */
 	private JPanel botPanel;
 	
+	
 	/**
 	 * If game has started.
 	 */
 	private boolean gameStart;
-	
-	
-	private PriorityQueue<String> scores;
-	
-	public PriorityQueue<String> getScores() {
-		return this.scores;
-	}
 	
 	/**
 	 * Constructs the SwingUI class.
 	 */
 	public SwingUI() {
 		this.panel = new StartPanel(this);
-		this.scorePanel = new ScorePanel(this);
+		this.scorePanel = new ScorePanel();
 		this.rightPanel = new JPanel();
 		this.topPanel = new JPanel();
 		this.botPanel = new JPanel();
@@ -150,8 +143,8 @@ public class SwingUI extends JFrame {
 	 * The current panel should be the game panel.
 	 * @param the current score of the player.
 	 */
-	public void updateInterface(int score) {
-		this.scorePanel.updateScore(score);
+	public void updateInterface(int score, int hiscore) {
+		this.scorePanel.updateScore(score, hiscore);
 		this.repaint();
 		this.getPanel().repaint();
 	}
@@ -175,6 +168,7 @@ public class SwingUI extends JFrame {
 	 * @return the startPanel
 	 */
 	public JPanel getStartPanel() {
+		scorePanel.clear();
 		this.setPreferredSize(new Dimension(SwingUI.DEFAULT_WIDTH, SwingUI.DEFAULT_HEIGHT));
 		return startPanel;
 	}
