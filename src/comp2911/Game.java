@@ -89,8 +89,7 @@ public class Game {
 		this.height = gameEngine.getMapGenerator().getBoardSize();
 		this.board = copyBoard(gameEngine.getBoard(level));
 		this.solver = new Solver(board, width, height);
-		if(swingUI.getGameMode() == 0)
-			this.scoreHandler.readScoreData();
+		this.scoreHandler.readScoreData();
 	}
 	
 	/**
