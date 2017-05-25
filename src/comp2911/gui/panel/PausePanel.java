@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import comp2911.Game;
 import comp2911.gui.SwingUI;
 
 /**
@@ -68,8 +69,9 @@ public class PausePanel extends JPanel {
 	 * Return back to game panel.
 	 */
 	public void switchPanel() {
-		this.gamePanel.getGame().setPause(false);
-		this.swingUI.switchPanel(gamePanel);
+		for (Game game : this.gamePanel.getGameEngine().getGames())
+			game.setPause(false);
+		this.swingUI.switchPanel(swingUI.getReturnPanel());
 		this.swingUI.requestFocusInWindow();
 	}
 }

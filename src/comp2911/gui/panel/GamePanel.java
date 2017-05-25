@@ -176,7 +176,8 @@ public class GamePanel extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		if (game.isPause()) {
-			this.swingUI.switchPanel(this.pausePanel);
+			if (!this.swingUI.getPanel().equals(this.pausePanel))
+				this.swingUI.switchPanel(this.pausePanel);
 			return;
 		} else if (game.isGameOver()) {
 			this.gameOverPanel.init();

@@ -378,7 +378,7 @@ public class Game {
 	 * Pause the game.
 	 */
 	public void pause() {
-		this.pause ^= true;
+		this.pause = true;
 		this.swingUI.repaint();
 	}
 

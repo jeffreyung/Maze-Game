@@ -60,6 +60,11 @@ public class SwingUI extends JFrame {
 	private JPanel botPanel;
 	
 	/**
+	 * The panel used for pausingto return.
+	 */
+	private JPanel returnPanel;
+	
+	/**
 	 * If game has started.
 	 */
 	private boolean gameStart;
@@ -68,6 +73,7 @@ public class SwingUI extends JFrame {
 	 * The game mode.
 	 */
 	private int gameMode;
+	
 	
 	/**
 	 * Constructs the SwingUI class.
@@ -197,6 +203,20 @@ public class SwingUI extends JFrame {
 	 */
 	public void setGameMode(int gameMode) {
 		this.gameMode = gameMode;
+	}
+
+	/**
+	 * @return the return panel.
+	 */
+	public JPanel getReturnPanel() {
+		return returnPanel;
+	}
+
+	/**
+	 * @param returnPanel the return panel to set.
+	 */
+	public void setReturnPanel(JPanel returnPanel) {
+		this.returnPanel = returnPanel;
 	}
 
 }

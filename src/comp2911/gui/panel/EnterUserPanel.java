@@ -165,10 +165,12 @@ public class EnterUserPanel extends JPanel {
 			panel.add(game2);
 			games.add(game1.getGame());
 			games.add(game2.getGame());
+			swingUI.setReturnPanel(panel);
 			return panel;
 		}
 		GamePanel game = new GamePanel(0, swingUI, gameEngine, name1);
 		games.add(game.getGame());
+		swingUI.setReturnPanel(game);
 		return game;
 	}
 	
