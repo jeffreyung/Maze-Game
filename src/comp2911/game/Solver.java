@@ -62,6 +62,7 @@ public class Solver {
 	 */
 	public boolean isSolvable() {
 		int count = 0;
+		boolean moveable = false;
 		for(int x = 0; x < this.width; x++) {
 			for(int y = 0; y < this.height; y++) {
 				if(board.get(y).get(x) == '.') {
@@ -74,11 +75,16 @@ public class Solver {
 							(staticObj.contains(board.get(y - 1).get(x))
 							&& staticObj.contains(board.get(y).get(x - 1))))
 						count++;
-				} else if(board.get(y).get(x) == ':')
-					count++;
+				} else if(board.get(y).get(x) == ':') {
+					if(board.get(y + 1).get(x) == ' ' ||
+							board.get(y - 1).get(x) == ' '||
+							board.get(y).get(x + 1) == ' '||
+							board.get(y).get(x - 1) == ' ')
+						moveable = true;
+				}
 			}
 		}
-		return count < this.goalTotal;
+		return count < this.goalTotal || moveable;
 	}
 	
 	/**
