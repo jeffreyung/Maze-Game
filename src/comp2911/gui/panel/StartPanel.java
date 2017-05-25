@@ -48,7 +48,7 @@ public class StartPanel extends JPanel {
 	 */
 	public void init() {
 		this.addButton("Start", "start_game");
-		this.addButton("Rules", "rules");
+		this.addButton("Walkthrough", "rules");
 		this.addButton("Scoreboard", "scoreboard");
 		this.addButton("Exit", "exit");
 		for(JButton button : buttons) {

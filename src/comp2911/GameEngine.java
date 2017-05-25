@@ -64,13 +64,19 @@ public class GameEngine {
 	}
 	
 	/**
+	 * @return the games list.
+	 */
+	public List<Game> getGames() {
+		return games;
+	}
+	
+	/**
 	 * @return the map generator.
 	 */
 	public MapInterface getMapGenerator() {
 		return mapGenerator;
 	}
 
-	
 	/**
 	 * @return the game board.
 	 */

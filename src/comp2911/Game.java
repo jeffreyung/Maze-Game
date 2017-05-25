@@ -89,8 +89,7 @@ public class Game {
 		this.height = gameEngine.getMapGenerator().getBoardSize();
 		this.board = copyBoard(gameEngine.getBoard(level));
 		this.solver = new Solver(board, width, height);
-		if(swingUI.getGameMode() == 0)
-			this.scoreHandler.readScoreData();
+		this.scoreHandler.readScoreData();
 	}
 	
 	/**
@@ -137,7 +136,9 @@ public class Game {
 	 * @param gamePanel is the user interface of the player.
 	 */
 	public void restartGame() {
-		this.gameEngine.generateBoard(1);
+		this.level = 1;
+		this.gameEngine.generateBoard(level);
+		board = copyBoard(gameEngine.getBoard(level));
 		player.setGameOver(false);
 		this.solver.initNewGame(getBoard(), getWidth(), getHeight());
 		player.setPosition(this.gameEngine.getMapGenerator().getInitialCharPos().clone());
@@ -158,12 +159,9 @@ public class Game {
 	
 	/**
 	 * Sends the user input to the map.
-	 * @param index of the player to be moved.
 	 * @param dir is the direction to be moved.
 	 */
-	public void sendUserDirection(int index, Direction dir) {
-		if (player.getIndex() != index)
-			return;
+	public void sendUserDirection(Direction dir) {
 		Position playerPos = player.getPosition();
 		if (player.isCompleteGame() || this.pause || player.isGameOver())
 			return;

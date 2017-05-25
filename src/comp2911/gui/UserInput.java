@@ -43,35 +43,35 @@ public class UserInput implements KeyListener {
 		switch(e.getKeyCode()) {
 		case KeyEvent.VK_W:
 			if (this.gamePanel.getIndex() == 0)
-				this.gamePanel.getGame().sendUserDirection(0, Direction.UP);
+				this.gamePanel.getGame().sendUserDirection(Direction.UP);
 			break;
 		case KeyEvent.VK_UP:
-			if (this.gamePanel.getIndex() == 1)
-				this.gamePanel.getGame().sendUserDirection(1, Direction.UP);
+			if (this.gamePanel.getIndex() == 1 || this.gamePanel.getGameEngine().getGames().size() == 1)
+				this.gamePanel.getGame().sendUserDirection(Direction.UP);
 			break;
 		case KeyEvent.VK_A:
 			if (this.gamePanel.getIndex() == 0)
-				this.gamePanel.getGame().sendUserDirection(0, Direction.LEFT);
+				this.gamePanel.getGame().sendUserDirection(Direction.LEFT);
 			break;
 		case KeyEvent.VK_LEFT:
-			if (this.gamePanel.getIndex() == 1)
-				this.gamePanel.getGame().sendUserDirection(1, Direction.LEFT);
+			if (this.gamePanel.getIndex() == 1 || this.gamePanel.getGameEngine().getGames().size() == 1)
+				this.gamePanel.getGame().sendUserDirection(Direction.LEFT);
 			break;
 		case KeyEvent.VK_S:
 			if (this.gamePanel.getIndex() == 0)
-				this.gamePanel.getGame().sendUserDirection(0, Direction.DOWN);
+				this.gamePanel.getGame().sendUserDirection(Direction.DOWN);
 			break;
 		case KeyEvent.VK_DOWN:
-			if (this.gamePanel.getIndex() == 1)
-				this.gamePanel.getGame().sendUserDirection(1, Direction.DOWN);
+			if (this.gamePanel.getIndex() == 1 || this.gamePanel.getGameEngine().getGames().size() == 1)
+				this.gamePanel.getGame().sendUserDirection(Direction.DOWN);
 			break;
 		case KeyEvent.VK_D:
 			if (this.gamePanel.getIndex() == 0)
-				this.gamePanel.getGame().sendUserDirection(0, Direction.RIGHT);
+				this.gamePanel.getGame().sendUserDirection(Direction.RIGHT);
 			break;
 		case KeyEvent.VK_RIGHT:
-			if (this.gamePanel.getIndex() == 1)
-				this.gamePanel.getGame().sendUserDirection(1, Direction.RIGHT);
+			if (this.gamePanel.getIndex() == 1 || this.gamePanel.getGameEngine().getGames().size() == 1)
+				this.gamePanel.getGame().sendUserDirection(Direction.RIGHT);
 			break;
 		case KeyEvent.VK_ESCAPE:
 			this.gamePanel.getGame().pause();

@@ -36,8 +36,8 @@ public class GameOptionPanel extends JPanel {
 	 */
 	public GameOptionPanel(SwingUI swingUI) {
 		this.swingUI = swingUI;
-		this.onePlayer = new JButton("One Player");
-		this.twoPlayer = new JButton("Two Player");
+		this.onePlayer = new JButton("One Player - move as many crates to the goal");
+		this.twoPlayer = new JButton("Two Player - who can score the most?");
 		this.setBackground(Color.BLACK);
 		this.init();
 	}
