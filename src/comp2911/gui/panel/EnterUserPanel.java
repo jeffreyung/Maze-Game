@@ -95,7 +95,7 @@ public class EnterUserPanel extends JPanel {
 	public void startGamePanel() {
 		String name = username.getText();
 		if (name.equals(""))
-			name = "un-named";
+			name = "default";
 		swingUI.switchPanel(new GamePanel(swingUI, name));
 	}
 	

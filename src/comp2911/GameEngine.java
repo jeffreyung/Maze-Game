@@ -15,6 +15,7 @@ import comp2911.game.ScoreHandler;
 import comp2911.game.Solver;
 import comp2911.gui.SwingUI;
 import comp2911.gui.UserInput;
+import comp2911.gui.panel.GamePanel;
 
 public class GameEngine {
 	
@@ -77,7 +78,7 @@ public class GameEngine {
 	 * The game pause.
 	 */
 	private boolean pause;
-	
+
 	/**
 	 * Constructs a new GameEngine and initializes the variables.
 	 */
@@ -111,11 +112,8 @@ public class GameEngine {
 		Player player = this.players.get(index);
 		if (player.isCompleteGame())
 			return;
-		player.addScore(solver.getScore());
-		this.scoreHandler.updateTopScore(player.getUsername(), player.getScore());
+		this.updateScore(index);
 		player.setCompleteGame(true);
-		if(Constants.DEBUG_MODE)
-			Logger.getLogger(UserInput.class.getName()).info("Generating new board...");
 		scheduler.schedule(new Runnable() {
 		    @Override
 		    public void run() {
@@ -130,6 +128,32 @@ public class GameEngine {
 	}
 	
 	/**
+	 * Called when the game is to be restarted
+	 * @param gamePanel is the user interface of the player.
+	 */
+	public void restartGame(GamePanel gamePanel) {
+		Player player = this.getPlayer(gamePanel.getUsername());
+		this.generateBoard(1);
+		player.setGameOver(false);
+		solver.initNewGame(board, width, height);
+		player.setPosition(mapGenerator.getInitialCharPos());
+		player.clearScore();
+		swingUI.updateInterface(solver.getScore() + player.getScore(),
+				scoreHandler.getTopScore(player.getUsername()));
+		player.setCompleteGame(false);
+	}
+	
+	/**
+	 * Updates the score of the player.
+	 * @param index of the player.
+	 */
+	public void updateScore(int index) {
+		Player player = this.players.get(index);
+		player.addScore(solver.getScore());
+		this.scoreHandler.updateTopScore(player.getUsername(), player.getScore());
+	}
+	
+	/**
 	 * Sends the user input to the map.
 	 * @param index of the player to be moved.
 	 * @param dir is the direction to be moved.
@@ -137,7 +161,7 @@ public class GameEngine {
 	public void sendUserDirection(int index, Direction dir) {
 		Player player = this.players.get(index);
 		Position playerPos = player.getPosition();
-		if (player.isCompleteGame() || this.pause)
+		if (player.isCompleteGame() || this.pause || player.isGameOver())
 			return;
 		this.interact = false;
 		this.interactEmptyTile(index, dir);
@@ -150,8 +174,15 @@ public class GameEngine {
 		if(solver.isGameComplete())
 			this.completeGame(index);
 		else if(!solver.isSolvable()) {
-			Logger.getLogger(UserInput.class.getName()).info("Game over - no crates can be moved.");
-			System.out.println();
+			player.setCompleteGame(true);
+			scheduler.schedule(new Runnable() {
+			    @Override
+			    public void run() {
+					updateScore(index);
+					player.setGameOver(true);
+					swingUI.getPanel().repaint();
+			    }
+			}, 1, TimeUnit.SECONDS);
 		}
 			
 	}
@@ -209,6 +240,17 @@ public class GameEngine {
 			}
 			break;
 		}
+	}
+	
+	/**
+	 * Checks if the game is game over.
+	 * @return if it is game over.
+	 */
+	public boolean isGameOver() {
+		for (Player player : this.players)
+			if (player.isGameOver())
+				return true;
+		return false;
 	}
 	
 	/**
@@ -321,6 +363,17 @@ public class GameEngine {
 	}
 
 	/**
+	 * Gets the player by username.
+	 * @param username of the player.
+	 * @return the player corresponding to the username.
+	 */
+	public Player getPlayer(String username) {
+		for (Player player : this.players)
+			if (player.getUsername().equals(username))
+				return player;
+		return null;
+	}
+	/**
 	 * Adds a new player to the game.
 	 * @param username of the player
 	 */
@@ -382,4 +435,5 @@ public class GameEngine {
 	public void setPause(boolean pause) {
 		this.pause = pause;
 	}
+
 }

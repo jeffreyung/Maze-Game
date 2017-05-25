@@ -35,6 +35,11 @@ public class GamePanel extends JPanel {
 	private SwingUI swingUI;
 	
 	/**
+	 * The username of the user.
+	 */
+	private String username;
+	
+	/**
 	 * The user input.
 	 */
 	private KeyListener userInput;
@@ -48,6 +53,11 @@ public class GamePanel extends JPanel {
 	 * The pause panel.
 	 */
 	private PausePanel pausePanel;
+
+	/**
+	 * The game over panel.
+	 */
+	private GameOverPanel gameOverPanel;
 	
 	/**
 	 * The list of tiles.
@@ -65,9 +75,11 @@ public class GamePanel extends JPanel {
 	 */
 	public GamePanel(SwingUI swingUI, String username) {
 		this.swingUI = swingUI;
+		this.username = username;
 		this.gameEngine = new GameEngine(this.swingUI);
 		this.pausePanel = new PausePanel(this.swingUI, this);
 		this.userInput = new UserInput(this.gameEngine);
+		this.gameOverPanel = new GameOverPanel(this.swingUI, this);
 		this.tiles = new ArrayList<Tile>();
 		this.attribute = new HashMap<Character, BufferedImage>();
 		this.swingUI.updateInterface(0, gameEngine.getScoreHandler().getTopScore(username));
@@ -148,7 +160,10 @@ public class GamePanel extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		if (gameEngine.isPause()) {
-			this.swingUI.switchPanel(pausePanel);
+			this.swingUI.switchPanel(this.pausePanel);
+			return;
+		} else if (gameEngine.isGameOver()) {
+			this.swingUI.switchPanel(this.gameOverPanel);
 			return;
 		}
 		super.paintComponent(g);
@@ -188,6 +203,20 @@ public class GamePanel extends JPanel {
 	 */
 	public GameEngine getGameEngine() {
 		return gameEngine;
+	}
+
+	/**
+	 * @return the username
+	 */
+	public String getUsername() {
+		return username;
+	}
+
+	/**
+	 * @param username the username to set
+	 */
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }

@@ -36,11 +36,17 @@ public class Player {
 	private boolean completeGame;
 	
 	/**
+	 * If player's current game is game over.
+	 */
+	private boolean gameOver;
+	
+	/**
 	 * Constructs a new player.
 	 * @param index of the player.
 	 */
 	public Player(int index) {
 		this.index = index;
+		this.gameOver = false;
 	}
 
 	/**
@@ -125,5 +131,26 @@ public class Player {
 	 */
 	public void addScore(int score) {
 		this.score += score;
+	}
+	
+	/**
+	 * Clears the player score.
+	 */
+	public void clearScore() {
+		this.score = 0;
+	}
+
+	/**
+	 * @return the gameOver
+	 */
+	public boolean isGameOver() {
+		return gameOver;
+	}
+
+	/**
+	 * @param gameOver the gameOver to set
+	 */
+	public void setGameOver(boolean gameOver) {
+		this.gameOver = gameOver;
 	}
 }

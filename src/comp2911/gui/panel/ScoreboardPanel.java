@@ -50,15 +50,15 @@ public class ScoreBoardPanel extends JPanel {
 		JButton exit = new JButton("Return to main menu");
 		PriorityQueue<ScoreData> topScores = score.getScores();
 		int count = 1;
-		String whole = "<html><b><font size=\"14\" color=\"black\"> Top Five Scores<font></b><br><br>"
-				+ "Rank  Score  Name<br>";
+		String whole = "<html><b><font size=\"14\" color=\"white\"> Top Five Scores<font></b><br><br>"
+				+ "<font color=\"white\">Rank  Score  Name<br>";
 		while(count <= 5 && !topScores.isEmpty()) {
 			ScoreData s = topScores.poll();
 			whole += count + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + s.getScore() +
 					"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + s.getUsername()+ "<br>";
 			count++;
 		}
-		whole += "</html>";
+		whole += "</font></html>";
 		exit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
