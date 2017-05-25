@@ -59,11 +59,15 @@ public class SwingUI extends JFrame {
 	 */
 	private JPanel botPanel;
 	
-	
 	/**
 	 * If game has started.
 	 */
 	private boolean gameStart;
+	
+	/**
+	 * The game mode.
+	 */
+	private int gameMode;
 	
 	/**
 	 * Constructs the SwingUI class.
@@ -144,7 +148,8 @@ public class SwingUI extends JFrame {
 	 * @param the current score of the player.
 	 */
 	public void updateInterface(int score, int hiscore) {
-		this.scorePanel.updateScore(score, hiscore);
+		if (this.gameMode == 0)
+			this.scorePanel.updateScore(score, hiscore);
 		this.repaint();
 		this.getPanel().repaint();
 	}
@@ -165,7 +170,7 @@ public class SwingUI extends JFrame {
 	}
 
 	/**
-	 * @return the startPanel
+	 * @return the startPanel.
 	 */
 	public JPanel getStartPanel() {
 		scorePanel.clear();
@@ -174,10 +179,24 @@ public class SwingUI extends JFrame {
 	}
 
 	/**
-	 * @param startPanel the startPanel to set
+	 * @param startPanel the startPanel to set.
 	 */
 	public void setStartPanel(JPanel startPanel) {
 		this.startPanel = startPanel;
+	}
+
+	/**
+	 * @return the game mode.
+	 */
+	public int getGameMode() {
+		return gameMode;
+	}
+
+	/**
+	 * @param gameMode the game mode to set.
+	 */
+	public void setGameMode(int gameMode) {
+		this.gameMode = gameMode;
 	}
 
 }

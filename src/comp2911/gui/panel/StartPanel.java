@@ -68,7 +68,7 @@ public class StartPanel extends JPanel {
 	public void handleButton(String name) {
 		switch (name) {
 		case "start_game":
-			this.swingUI.switchPanel(new EnterUserPanel(this.swingUI));
+			this.swingUI.switchPanel(new GameOptionPanel(this.swingUI));
 			break;
 		case "rules":
 			this.swingUI.switchPanel(new RulesPanel(this.swingUI));

@@ -19,6 +19,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import comp2911.Constants;
+import comp2911.Game;
 import comp2911.GameEngine;
 import comp2911.gui.SwingUI;
 import comp2911.gui.UserInput;
@@ -45,9 +46,9 @@ public class GamePanel extends JPanel {
 	private KeyListener userInput;
 
 	/**
-	 * The game engine.
+	 * The game .
 	 */
-	private GameEngine gameEngine;
+	private Game game;
 	
 	/**
 	 * The pause panel.
@@ -68,22 +69,28 @@ public class GamePanel extends JPanel {
 	 * The images of characters.
 	 */
 	private Map<Character, BufferedImage> attribute;
+	
+	/**
+	 * The index of  game panel.
+	 */
+	private int index;
 
 	/**
 	 * The constructor of the StartScreen class
 	 * @param swingUI 
 	 */
-	public GamePanel(SwingUI swingUI, String username) {
+	public GamePanel(int index, SwingUI swingUI, GameEngine gameEngine, String username) {
+		this.index = index;
 		this.swingUI = swingUI;
 		this.username = username;
-		this.gameEngine = new GameEngine(this.swingUI);
+		this.game = new Game(swingUI, gameEngine);
 		this.pausePanel = new PausePanel(this.swingUI, this);
-		this.userInput = new UserInput(this.gameEngine);
+		this.userInput = new UserInput(this);
 		this.gameOverPanel = new GameOverPanel(this.swingUI, this);
 		this.tiles = new ArrayList<Tile>();
 		this.attribute = new HashMap<Character, BufferedImage>();
-		this.swingUI.updateInterface(0, gameEngine.getScoreHandler().getTopScore(username));
-		this.gameEngine.addPlayer(username);
+		this.swingUI.updateInterface(0, game.getScoreHandler().getTopScore(username));
+		this.game.setPlayer(username, index);
 		this.init();
 	}
 
@@ -94,7 +101,10 @@ public class GamePanel extends JPanel {
 		this.addKeyListener(this.userInput);
 		this.swingUI.addKeyListener(this.userInput);
 		this.swingUI.setGameStart(true);
-		this.swingUI.setPreferredSize(new Dimension(SwingUI.DEFAULT_WIDTH, SwingUI.DEFAULT_HEIGHT));
+		if (this.swingUI.getGameMode() == 0)
+			this.swingUI.setPreferredSize(new Dimension(SwingUI.DEFAULT_WIDTH, SwingUI.DEFAULT_HEIGHT));
+		else
+			this.swingUI.setPreferredSize(new Dimension(SwingUI.DEFAULT_WIDTH * 2, SwingUI.DEFAULT_HEIGHT));
 		this.setFocusable(true);
 		this.requestFocusInWindow();
 		this.setBackground(Color.BLACK);
@@ -122,7 +132,7 @@ public class GamePanel extends JPanel {
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
 				Rectangle rectangle = new Rectangle(x * tileSize, y * tileSize, tileSize - 2, tileSize - 2);
-				char type = this.gameEngine.getBoard().get(y).get(x);
+				char type = this.game.getBoard().get(y).get(x);
 				if (this.attribute.containsKey(type))
 					this.tiles.add(new Tile(getColor(type), this.attribute.get(type), rectangle));
 				else
@@ -159,16 +169,16 @@ public class GamePanel extends JPanel {
 	 */
 	@Override
 	protected void paintComponent(Graphics g) {
-		if (gameEngine.isPause()) {
+		if (game.isPause()) {
 			this.swingUI.switchPanel(this.pausePanel);
 			return;
-		} else if (gameEngine.isGameOver()) {
+		} else if (game.isGameOver()) {
 			this.swingUI.switchPanel(this.gameOverPanel);
 			return;
 		}
 		super.paintComponent(g);
-		final int width = gameEngine.getWidth();
-		final int height = gameEngine.getHeight();
+		final int width = game.getWidth();
+		final int height = game.getHeight();
 		final int tileSize = Constants.TILE_SIZE;
 		this.createTiles(width, height, tileSize);
 		Graphics2D g2d = (Graphics2D) g.create();
@@ -199,10 +209,10 @@ public class GamePanel extends JPanel {
 	}
 	
 	/**
-	 * The game engine.
+	 * The game .
 	 */
-	public GameEngine getGameEngine() {
-		return gameEngine;
+	public Game getGame() {
+		return game;
 	}
 
 	/**
@@ -213,10 +223,10 @@ public class GamePanel extends JPanel {
 	}
 
 	/**
-	 * @param username the username to set
+	 * @return the index.
 	 */
-	public void setUsername(String username) {
-		this.username = username;
+	public int getIndex() {
+		return index;
 	}
 
 }

@@ -51,7 +51,7 @@ public class GameOverPanel extends JPanel {
 		button1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				gamePanel.getGameEngine().restartGame(gamePanel);
+				gamePanel.getGame().restartGame();
 				swingUI.switchPanel(gamePanel);
 				swingUI.requestFocusInWindow();
 			}

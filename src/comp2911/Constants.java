@@ -13,7 +13,7 @@ public class Constants {
 	/**
 	 * The debug mode.
 	 */
-	public static final boolean DEBUG_MODE = true;
+	public static final boolean DEBUG_MODE = false;
 	
 	/**
 	 * The tile size.

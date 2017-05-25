@@ -68,7 +68,7 @@ public class PausePanel extends JPanel {
 	 * Return back to game panel.
 	 */
 	public void switchPanel() {
-		this.gamePanel.getGameEngine().setPause(false);
+		this.gamePanel.getGame().setPause(false);
 		this.swingUI.switchPanel(gamePanel);
 		this.swingUI.requestFocusInWindow();
 	}

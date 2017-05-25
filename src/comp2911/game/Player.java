@@ -42,9 +42,11 @@ public class Player {
 	
 	/**
 	 * Constructs a new player.
-	 * @param index of the player.
+	 * @param username of the player.
+	 * @param index 
 	 */
-	public Player(int index) {
+	public Player(String username, int index) {
+		this.username = username;
 		this.index = index;
 		this.gameOver = false;
 	}

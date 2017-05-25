@@ -3,6 +3,7 @@ package comp2911.gui.panel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import comp2911.GameEngine;
 import comp2911.gui.SwingUI;
 
 /**
@@ -25,9 +27,14 @@ public class EnterUserPanel extends JPanel {
 	private SwingUI swingUI;
 	
 	/**
-	 * The username text field.
+	 * The username text field for player 1.
 	 */
-	private JTextField username;
+	private JTextField username1;
+	
+	/**
+	 * The username text field for player 2.
+	 */
+	private JTextField username2;
 	
 	/**
 	 * The button to set the name.
@@ -45,33 +52,37 @@ public class EnterUserPanel extends JPanel {
 	 */
 	public EnterUserPanel(SwingUI swingUI) {
 		this.swingUI = swingUI;
-		this.username = new JTextField();
+		this.username1 = new JTextField();
+		this.username2 = new JTextField();
 		this.enter = new JButton("Enter");
 		this.exit = new JButton("Return to main menu");
 		this.setBackground(Color.BLACK);
-		this.init();
+		if (swingUI.getGameMode() == 0)
+			this.initOnePlayer();
+		else
+			this.initTwoPlayer();
 	}
 	
 	/**
-	 * Initializes the enter user panel.
+	 * Initializes the enter user panel for one player.
 	 */
-	public void init() {
+	public void initOnePlayer() {
 		JLabel label = new JLabel("Enter your name: ");
 		JPanel subPanel1 = new JPanel();
 		JPanel subPanel2 = new JPanel();
 		this.setLayout(new BorderLayout());
-		this.username.setColumns(8);
+		this.username1.setColumns(8);
 		swingUI.setPreferredSize(new Dimension(600, 300));
-		username.addActionListener(new ActionListener() {
+		username1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				startGamePanel();
+				swingUI.switchPanel(getGamePanel());
 			}
 		});
 		enter.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				startGamePanel();
+				swingUI.switchPanel(getGamePanel());
 			}
 		});
 		exit.addActionListener(new ActionListener() {
@@ -82,7 +93,7 @@ public class EnterUserPanel extends JPanel {
 			}
 		});
 		subPanel1.add(label);
-		subPanel1.add(username);
+		subPanel1.add(username1);
 		subPanel1.add(enter);
 		subPanel2.add(exit);
 		this.add(subPanel1, BorderLayout.CENTER);
@@ -90,13 +101,67 @@ public class EnterUserPanel extends JPanel {
 	}
 	
 	/**
-	 * Start the game panel.
+	 * Initializes the enter user panel for two player.
 	 */
-	public void startGamePanel() {
-		String name = username.getText();
-		if (name.equals(""))
-			name = "default";
-		swingUI.switchPanel(new GamePanel(swingUI, name));
+	public void initTwoPlayer() {
+		JLabel label1 = new JLabel("Enter player one name: ");
+		JLabel label2 = new JLabel("Enter player two name: ");
+		JPanel subPanel1 = new JPanel();
+		JPanel subPanel2 = new JPanel();
+		this.setLayout(new BorderLayout());
+		this.username1.setColumns(8);
+		this.username2.setColumns(8);
+		swingUI.setPreferredSize(new Dimension(600, 300));
+		username1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				swingUI.switchPanel(getGamePanel());
+			}
+		});
+		enter.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				swingUI.switchPanel(getGamePanel());
+			}
+		});
+		exit.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				swingUI.switchPanel(swingUI.getStartPanel());
+				swingUI.setPreferredSize(new Dimension(SwingUI.DEFAULT_WIDTH, SwingUI.DEFAULT_HEIGHT));
+			}
+		});
+		subPanel1.add(label1);
+		subPanel1.add(username1);
+		subPanel1.add(label2);
+		subPanel1.add(username2);
+		subPanel1.add(enter);
+		subPanel2.add(exit);
+		this.add(subPanel1, BorderLayout.CENTER);
+		this.add(subPanel2, BorderLayout.SOUTH);
+	}
+	
+	/**
+	 * Determines the game panel of the game mode.
+	 * @return the panel.
+	 */
+	public JPanel getGamePanel() {
+		GameEngine gameEngine = new GameEngine();
+		String name1 = username1.getText();
+		if (name1.equals(""))
+			name1 = "default";
+		if (swingUI.getGameMode() == 1) {
+			String name2 = username2.getText();
+			JPanel panel = new JPanel(new GridLayout(0, 2));
+			if (name2.equals(""))
+				name2 = "default 2";
+			GamePanel game1 = new GamePanel(0, swingUI, gameEngine, name1);
+			GamePanel game2 = new GamePanel(1, swingUI, gameEngine, name2);
+			panel.add(game1);
+			panel.add(game2);
+			return panel;
+		}
+		return new GamePanel(0, swingUI, gameEngine, name1);
 	}
 	
 }
