@@ -46,9 +46,14 @@ public class GamePanel extends JPanel {
 	private KeyListener userInput;
 
 	/**
-	 * The game .
+	 * The game.
 	 */
 	private Game game;
+	
+	/**
+	 * The game engine.
+	 */
+	private GameEngine gameEngine;
 	
 	/**
 	 * The pause panel.
@@ -82,6 +87,7 @@ public class GamePanel extends JPanel {
 	public GamePanel(int index, SwingUI swingUI, GameEngine gameEngine, String username) {
 		this.index = index;
 		this.swingUI = swingUI;
+		this.gameEngine = gameEngine;
 		this.username = username;
 		this.game = new Game(swingUI, gameEngine);
 		this.pausePanel = new PausePanel(this.swingUI, this);
@@ -173,6 +179,7 @@ public class GamePanel extends JPanel {
 			this.swingUI.switchPanel(this.pausePanel);
 			return;
 		} else if (game.isGameOver()) {
+			this.gameOverPanel.init();
 			this.swingUI.switchPanel(this.gameOverPanel);
 			return;
 		}
@@ -227,6 +234,20 @@ public class GamePanel extends JPanel {
 	 */
 	public int getIndex() {
 		return index;
+	}
+
+	/**
+	 * @return the game engine.
+	 */
+	public GameEngine getGameEngine() {
+		return gameEngine;
+	}
+
+	/**
+	 * @param gameEngine the game engine to set.
+	 */
+	public void setGameEngine(GameEngine gameEngine) {
+		this.gameEngine = gameEngine;
 	}
 
 }

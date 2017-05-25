@@ -426,4 +426,18 @@ public class Game {
 		this.pause = pause;
 	}
 
+	/**
+	 * @return the level of the current game.
+	 */
+	public int getLevel() {
+		return level;
+	}
+
+	/**
+	 * @return the player of the game.
+	 */
+	public Player getPlayer() {
+		return player;
+	}
+
 }

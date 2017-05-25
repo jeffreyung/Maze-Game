@@ -37,13 +37,12 @@ public class GameOverPanel extends JPanel {
 		this.swingUI = swingUI;
 		this.gamePanel = gamePanel;
 		this.setBackground(Color.BLACK);
-		this.init();
 	}
 	
 	/**
 	 * Initializes the top score board.
 	 */
-	private void init() {
+	public void init() {
 		JLabel text = new JLabel("<html><b><font color=\"white\" size=\"14\">Game over</font><b></html>");
 		JButton button1 = new JButton("Restart game");
 		JButton button2 = new JButton("Return to main menu");
@@ -64,7 +63,15 @@ public class GameOverPanel extends JPanel {
 		});
 		subPanel.setBackground(Color.BLACK);
 		subPanel.add(text);
-		subPanel.add(button1);
+		if (swingUI.getGameMode() == 0)
+			subPanel.add(button1);
+		else {
+			if (gamePanel.getGameEngine().getWinner() == null)
+				subPanel.add(new JLabel("<html><font color=\"white\">No winner</font></html>"));
+			else
+				subPanel.add(new JLabel("<html><font color=\"white\">Winner is " +
+					gamePanel.getGameEngine().getWinner().getUsername() + "</font></html>"));
+		}
 		subPanel.add(button2);
 		this.add(subPanel);
 	}
