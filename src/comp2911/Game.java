@@ -137,7 +137,9 @@ public class Game {
 	 * @param gamePanel is the user interface of the player.
 	 */
 	public void restartGame() {
-		this.gameEngine.generateBoard(1);
+		this.level = 1;
+		this.gameEngine.generateBoard(level);
+		board = copyBoard(gameEngine.getBoard(level));
 		player.setGameOver(false);
 		this.solver.initNewGame(getBoard(), getWidth(), getHeight());
 		player.setPosition(this.gameEngine.getMapGenerator().getInitialCharPos().clone());
