@@ -64,6 +64,13 @@ public class GameEngine {
 	}
 	
 	/**
+	 * Clears the board map.
+	 */
+	public void clearBoardMap() {
+		this.boardMap.clear();
+	}
+	
+	/**
 	 * @return the games list.
 	 */
 	public List<Game> getGames() {

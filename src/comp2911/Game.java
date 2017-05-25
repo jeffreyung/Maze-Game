@@ -137,6 +137,7 @@ public class Game {
 	 */
 	public void restartGame() {
 		this.level = 1;
+		this.gameEngine.clearBoardMap();
 		this.gameEngine.generateBoard(level);
 		board = copyBoard(gameEngine.getBoard(level));
 		player.setGameOver(false);

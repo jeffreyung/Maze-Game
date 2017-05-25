@@ -217,7 +217,7 @@ public class GamePanel extends JPanel {
 	}
 	
 	/**
-	 * The game .
+	 * The game.
 	 */
 	public Game getGame() {
 		return game;
