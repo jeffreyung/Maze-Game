@@ -43,15 +43,16 @@ public class GameEngine {
 	 * @return the player who completed the most board.
 	 */
 	public Player getWinner() {
-		int max = 1;
+		int max = 0;
 		Player winner = games.get(0).getPlayer();
 		for (Game game : games) {
-			if (game.getLevel() > max) {
-				max = game.getLevel() + game.getPlayer().getScore();
+			if (game.getPlayer().getScore() > max) {
+				max = game.getPlayer().getScore();
 				winner = game.getPlayer();
-			}
+			} else if (game.getPlayer().getScore() == max)
+				return null;
 		}
-		return max == 1 ? null : winner;
+		return max == 0 ? null : winner;
 	}
 	/**
 	 * Generates a new board for a given level
