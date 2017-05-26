@@ -44,7 +44,7 @@ public class MapGenerator implements MapInterface{
 		setBox();
 		
 		map.get(3).set(3, '|');
-		map.get(1).set(1, 'c');
+		map.get(1).set(1, '1');
 		intialCharPos = new Position(1,1);
 		map.get(5).set(5, 'x');
 		

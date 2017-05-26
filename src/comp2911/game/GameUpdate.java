@@ -64,7 +64,7 @@ public class GameUpdate {
 		int count = 0;
 		for(int x = 0; x < this.width; x++) {
 			for(int y = 0; y < this.height; y++) {
-				if(board.get(y).get(x) == '.') {
+				if(board.get(y).get(x) == '.' || board.get(y).get(x) == ':') {
 					if((staticObj.contains(board.get(y + 1).get(x))
 							&& staticObj.contains(board.get(y).get(x + 1))) ||
 							(staticObj.contains(board.get(y + 1).get(x))
@@ -74,8 +74,7 @@ public class GameUpdate {
 							(staticObj.contains(board.get(y - 1).get(x))
 							&& staticObj.contains(board.get(y).get(x - 1))))
 						count++;
-				} else if(board.get(y).get(x) == ':')
-					count++;
+				}
 			}
 		}
 		return count < this.goalTotal;

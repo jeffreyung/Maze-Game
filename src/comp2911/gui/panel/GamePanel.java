@@ -117,7 +117,10 @@ public class GamePanel extends JPanel {
 		this.swingUI.requestFocusInWindow();
 		this.setVisible(true);
 		try {
-			this.attribute.put('c', ImageIO.read(new File(Constants.IMAGES_DIR + "/player.gif")));
+			this.attribute.put('0', ImageIO.read(new File(Constants.IMAGES_DIR + "/c_up.png")));
+			this.attribute.put('1', ImageIO.read(new File(Constants.IMAGES_DIR + "/c_down.png")));
+			this.attribute.put('2', ImageIO.read(new File(Constants.IMAGES_DIR + "/c_left.png")));
+			this.attribute.put('3', ImageIO.read(new File(Constants.IMAGES_DIR + "/c_right.png")));
 			this.attribute.put('.', ImageIO.read(new File(Constants.IMAGES_DIR + "/crate_1.gif")));
 			this.attribute.put(':', ImageIO.read(new File(Constants.IMAGES_DIR + "/crate_2.gif")));
 			this.attribute.put('x', ImageIO.read(new File(Constants.IMAGES_DIR + "/goal.gif")));
