@@ -1,4 +1,3 @@
-<<<<<<< HEAD:src/comp2911/game/Game.java
 package comp2911.game;
 
 import java.util.ArrayList;
