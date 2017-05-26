@@ -6,7 +6,7 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 /**
- * @author Jeffrey Ung
+ * @author Jeffrey Ung and Jamison Tsai
  */
 public class Solver {
 
@@ -342,10 +342,10 @@ public class Solver {
 	 */
 	public boolean finished(State state) {
 		if(goalTotal == 1) {
-			if(board.get(state.getYOne()).get(state.getXOne()) == 'g') return true;
+			if(board.get(state.getYOne()).get(state.getXOne()) == 'x') return true;
 		} else if(goalTotal == 2) {
-			if(board.get(state.getYOne()).get(state.getXOne()) == 'g' &&
-					board.get(state.getYTwo()).get(state.getXTwo()) == 'g') return true;
+			if(board.get(state.getYOne()).get(state.getXOne()) == 'x' &&
+					board.get(state.getYTwo()).get(state.getXTwo()) == 'x') return true;
 		}
 		return false;
 	}
