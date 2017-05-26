@@ -209,7 +209,8 @@ public class Game {
 				player.setStandingOnGoal(tileType == 'x');
 				playerPos.moveUp();
 				this.interact = true;
-			}
+			} else
+				this.getBoard().get(playerPos.getY()).set(playerPos.getX(), '0');
 			break;
 		case DOWN:
 			tileType = getTileType(playerPos.getX(), playerPos.getY() + 1);
@@ -219,7 +220,8 @@ public class Game {
 				player.setStandingOnGoal(tileType == 'x');
 				playerPos.moveDown();
 				this.interact = true;
-			}
+			} else
+				this.getBoard().get(playerPos.getY()).set(playerPos.getX(), '1');
 			break;
 		case LEFT:
 			tileType = getTileType(playerPos.getX() - 1, playerPos.getY());
@@ -229,7 +231,8 @@ public class Game {
 				player.setStandingOnGoal(tileType == 'x');
 				playerPos.moveLeft();
 				this.interact = true;
-			}
+			} else
+				this.getBoard().get(playerPos.getY()).set(playerPos.getX(), '2');
 			break;
 		case RIGHT:
 			tileType = getTileType(playerPos.getX() + 1, playerPos.getY());
@@ -239,7 +242,8 @@ public class Game {
 				player.setStandingOnGoal(tileType == 'x');
 				playerPos.moveRight();
 				this.interact = true;
-			}
+			} else
+				this.getBoard().get(playerPos.getY()).set(playerPos.getX(), '3');
 			break;
 		}
 	}
