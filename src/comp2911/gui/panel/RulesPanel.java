@@ -2,6 +2,7 @@ package comp2911.gui.panel;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -39,6 +40,7 @@ public class RulesPanel extends JPanel {
 	 */
 	private void init() {
 		JButton exit = new JButton("Return to main menu");
+		exit.setFont(new Font("Arial", Font.PLAIN, 15));
 		ImageIcon image = new ImageIcon("./data/img/walkthrough_1.jpg");
 		JLabel label = new JLabel("", image, JLabel.CENTER);
 		JPanel panel = new JPanel(new BorderLayout());

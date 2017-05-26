@@ -1,6 +1,7 @@
 package comp2911.gui.panel;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -48,9 +49,11 @@ public class GameOverPanel extends JPanel {
 	 * Initializes the top score board.
 	 */
 	public void init() {
-		JLabel text = new JLabel("<html><b><font color=\"white\" size=\"16\">Game over</font><b></html>");
+		JLabel text = new JLabel("<html><b><font color=\"white\" size=\"20\" style=\"font-family:Arial\">Game over</font><b></html>", JLabel.CENTER);
 		JButton button1 = new JButton("Restart game");
 		JButton button2 = new JButton("Return to main menu");
+		button1.setFont(new Font("Arial", Font.PLAIN, 30));
+		button2.setFont(new Font("Arial", Font.PLAIN, 30));
 		JPanel subPanel = new JPanel(new GridLayout(3, 0, 0, 50));
 		Image image1 = Toolkit.getDefaultToolkit().getImage("./data/img/button_1.png");
 		Image image2 = Toolkit.getDefaultToolkit().getImage("./data/img/button_2.png");

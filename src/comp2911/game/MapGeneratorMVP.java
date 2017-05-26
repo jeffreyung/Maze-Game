@@ -34,10 +34,7 @@ public class MapGeneratorMVP implements MapInterface{
 		map.get(1).set(1, '1');
 		intialCharPos = new Position(1,1);
 		map.get(5).set(5, 'x');
-		
-		
-		
-		printBoard();
+		//printBoard();
 		return map;
 	}
 	
@@ -79,25 +76,6 @@ public class MapGeneratorMVP implements MapInterface{
 	
 	/**
 	 * Initialises map
-	 * @param x, size of x direction
-	 * @param y, size of y direction
-	 */
-	private void initMap(int x, int y) {
-		ArrayList<Character> row;
-		int i = 0;
-		int j = 0;
-		
-		for (i = 0; i < y; i++){
-			row = new ArrayList<Character>();
-			for (j = 0; j < x; j++){
-				row.add('|');
-			}
-			map.add(row);
-		}
-	}
-	
-	/**
-	 * Initialises map
 	 * @param size, size of square map
 	 */
 	private void initMap(int size) {
@@ -113,11 +91,8 @@ public class MapGeneratorMVP implements MapInterface{
 			map.add(row);
 		}
 	}
-	
-	/**
-	 * TODO delete
-	 */
-	public void printBoard() {
+
+	/**public void printBoard() {
 		int i = 0;
 		
 		System.out.print("  ");
@@ -144,7 +119,7 @@ public class MapGeneratorMVP implements MapInterface{
 			}
 			System.out.println();
 		}
-	}
+	}*/
 	
 	@Override
 	public int getBoardSize() {

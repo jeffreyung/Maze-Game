@@ -1,6 +1,7 @@
 package comp2911.gui.panel;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -42,7 +43,9 @@ public class GameOptionPanel extends JPanel {
 	public GameOptionPanel(SwingUI swingUI) {
 		this.swingUI = swingUI;
 		this.onePlayer = new JButton("One Player - move as many crates to the goal");
-		this.twoPlayer = new JButton("Two Player - who can score the most?");
+		onePlayer.setFont(new Font("Arial", Font.PLAIN, 16));
+		this.twoPlayer = new JButton("Two Player - who can complete the most level?");
+		twoPlayer.setFont(new Font("Arial", Font.PLAIN, 16));
 		this.setBackground(SwingUI.DEFAULT_COLOR);
 		this.init();
 	}
@@ -57,7 +60,7 @@ public class GameOptionPanel extends JPanel {
 		Image newimg2 = image2.getScaledInstance(420, 60, Image.SCALE_SMOOTH);
 		ImageIcon imgIcon1 = new ImageIcon(newimg1);
 		ImageIcon imgIcon2 = new ImageIcon(newimg2);
-		JLabel label = new JLabel("<html><b><font color=\"white\" size=\"14\">Select game mode</font><b></html>");
+		JLabel label = new JLabel("<html><b><font color=\"white\" size=\"14\" style=\"font-family:Arial\">Select Game Mode</font><b></html>", JLabel.CENTER);
 		this.setLayout(new GridLayout(3, 0, 0, 20));
 		swingUI.setPreferredSize(new Dimension(600, 400));
 		onePlayer.addActionListener(new ActionListener() {

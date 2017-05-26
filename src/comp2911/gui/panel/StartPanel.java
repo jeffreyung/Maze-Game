@@ -1,6 +1,7 @@
 package comp2911.gui.panel;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -109,6 +110,7 @@ public class StartPanel extends JPanel {
 		button.setIcon(imgIcon1);
 		button.setHorizontalTextPosition(SwingConstants.CENTER);
 		button.setBorderPainted(false);
+		button.setFont(new Font("Arial", Font.PLAIN, 30));
 		button.addMouseListener(new MouseListener() {			
 			@Override
 			public void mouseReleased(MouseEvent arg0) {}		   

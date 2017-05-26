@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MapGenerator implements MapInterface{
+	
 	private static final int TOP = 0;
 	private static final int LEFT = 1;
 	private static final int BOTTOM = 2;
@@ -16,8 +17,13 @@ public class MapGenerator implements MapInterface{
 	private ArrayList<ArrayList<Integer>> box2Pos;
 	private int boardSize;
 	private Position intialCharPos;
+	private Solver solver;
+	private int goalTotal;
 	
-	public MapGenerator(){
+	/**
+	 * Constructs a new Map generator.
+	 */
+	public MapGenerator() {
 		map = new ArrayList<ArrayList<Character>>();
 		box2Pos = new ArrayList<ArrayList<Integer>>();
 		notQuadThree = false;
@@ -26,14 +32,32 @@ public class MapGenerator implements MapInterface{
 		initBox2Array();
 	}
 	
+	/**
+	 * Generates a new map.
+	 * @return a functioning map.
+	 */
 	@Override
 	public ArrayList<ArrayList<Character>> createBoard() {
+		makeBoard();
+		solver = new Solver(map, goalTotal, boardSize, boardSize);
+		while(!solver.search()) {
+			makeBoard();
+			solver = new Solver(map, goalTotal, boardSize, boardSize);
+		}
+		//printBoard();
+		return map;
+	}
+	
+	/**
+	 * Makes the board.
+	 */
+	private void makeBoard() {
 		int size = 7;
 		boardSize = size;
 		map.clear();
 		initMap(size);
 		for(int i = 0; i < size; i++) {
-			for(int j = 0; j < size; j++){
+			for(int j = 0; j < size; j++) {
 				if ( (i != 0) && (j != 0) && (i != size - 1) && (j != size - 1) ) {
 					map.get(i).set(j, ' ');
 				}
@@ -47,11 +71,6 @@ public class MapGenerator implements MapInterface{
 		map.get(1).set(1, '1');
 		intialCharPos = new Position(1,1);
 		map.get(5).set(5, 'x');
-		
-		
-		
-		printBoard();
-		return map;
 	}
 	
 	/**
@@ -64,99 +83,99 @@ public class MapGenerator implements MapInterface{
 		boolean onCentre = rand.nextBoolean();
 		int directions = 0;
 		
-		if (numWalls == 3){
+		if (numWalls == 3) {
 			map.get(3).set(4, '|');
 			directions = 3;
 			numWalls = rand.nextInt(directions);
-			if (numWalls == TOP){
+			if (numWalls == TOP) {
 				notQuadOne = true;
 				map.get(1).set(3, '|');
 				map.get(3).set(1, '|');
-			} else if (numWalls == LEFT){
+			} else if (numWalls == LEFT) {
 				extraGoalUp = true;
 				map.get(1).set(3, '|');
 				map.get(5).set(3, '|');
-			} else if (numWalls == BOTTOM){
+			} else if (numWalls == BOTTOM) {
 				notQuadThree = true;
 				extraGoalUp = true;
 				map.get(3).set(1, '|');
 				map.get(5).set(3, '|');
 			}
-		} else if (numWalls == 2){
-			if (onCentre == true){
+		} else if (numWalls == 2) {
+			if (onCentre == true) {
 				//placing wall on inside
 				directions = 4;
 				numWalls = rand.nextInt(directions);
-				if (numWalls == TOP){
+				if (numWalls == TOP) {
 					map.get(2).set(3, '|');
-				} else if (numWalls == LEFT){
+				} else if (numWalls == LEFT) {
 					map.get(3).set(2, '|');
-				} else if (numWalls == BOTTOM){
+				} else if (numWalls == BOTTOM) {
 					map.get(4).set(3, '|');
-				} else if (numWalls == RIGHT){
+				} else if (numWalls == RIGHT) {
 					map.get(3).set(4, '|');
 				} 
 				//placing second wall on outside
 				numWalls = rand.nextInt(directions);
-				if (numWalls == TOP){
+				if (numWalls == TOP) {
 					map.get(1).set(3, '|');
-				} else if (numWalls == LEFT){
+				} else if (numWalls == LEFT) {
 					map.get(3).set(1, '|');
-				} else if (numWalls == BOTTOM){
+				} else if (numWalls == BOTTOM) {
 					map.get(5).set(3, '|');
-				} else if (numWalls == RIGHT){
+				} else if (numWalls == RIGHT) {
 					map.get(3).set(5, '|');
 				} 
 			} else {
 				//placing wall on outside
 				directions = 4;
 				numWalls = rand.nextInt(directions);
-				if (numWalls == TOP){
+				if (numWalls == TOP) {
 					map.get(1).set(3, '|');
-				} else if (numWalls == LEFT){
+				} else if (numWalls == LEFT) {
 					map.get(3).set(1, '|');
-				} else if (numWalls == BOTTOM){
+				} else if (numWalls == BOTTOM) {
 					map.get(5).set(3, '|');
-				} else if (numWalls == RIGHT){
+				} else if (numWalls == RIGHT) {
 					map.get(3).set(5, '|');
 				} 
 				//placing second wall on outside
 				numWalls = rand.nextInt(directions);
-				if (numWalls == TOP){
+				if (numWalls == TOP) {
 					map.get(1).set(3, '|');
-				} else if (numWalls == LEFT){
+				} else if (numWalls == LEFT) {
 					map.get(3).set(1, '|');
-				} else if (numWalls == BOTTOM){
+				} else if (numWalls == BOTTOM) {
 					map.get(5).set(3, '|');
-				} else if (numWalls == RIGHT){
+				} else if (numWalls == RIGHT) {
 					map.get(3).set(5, '|');
 				} 
 			}
-		} else if (numWalls == 1){
-			if (onCentre == true){
+		} else if (numWalls == 1) {
+			if (onCentre == true) {
 				//placing wall on inside
 				directions = 4;
 				numWalls = rand.nextInt(directions);
-				if (numWalls == TOP){
+				if (numWalls == TOP) {
 					map.get(2).set(3, '|');
-				} else if (numWalls == LEFT){
+				} else if (numWalls == LEFT) {
 					map.get(3).set(2, '|');
-				} else if (numWalls == BOTTOM){
+				} else if (numWalls == BOTTOM) {
 					map.get(4).set(3, '|');
-				} else if (numWalls == RIGHT){
+				} else if (numWalls == RIGHT) {
 					map.get(3).set(4, '|');
 				} 
 			} else {
 				//placing wall on outside
 				directions = 4;
 				numWalls = rand.nextInt(directions);
-				if (numWalls == TOP){
+				if (numWalls == TOP) {
 					map.get(1).set(3, '|');
-				} else if (numWalls == LEFT){
+				} else if (numWalls == LEFT) {
 					map.get(3).set(1, '|');
-				} else if (numWalls == BOTTOM){
+				} else if (numWalls == BOTTOM) {
 					map.get(5).set(3, '|');
-				} else if (numWalls == RIGHT){
+				} else if (numWalls == RIGHT) {
 					map.get(3).set(5, '|');
 				} 
 			}
@@ -181,119 +200,102 @@ public class MapGenerator implements MapInterface{
 		int botMid = 6;
 		int botRight = 7;
 		
-		if (numBoxes == 1){
-			if (boxPos == topLeft){
-				if(notQuadOne == false){
+		goalTotal = numBoxes;
+		
+		if (numBoxes == 1) {
+			if (boxPos == topLeft) {
+				if(notQuadOne == false) {
 					map.get(2).set(2, '.');
 				} else { 
 					map.get(2).set(4, '.');
 				}
-			} else if (boxPos == topMid){
+			} else if (boxPos == topMid) {
 				map.get(2).set(3, '.');
-			} else if (boxPos == topRight){
+			} else if (boxPos == topRight) {
 				map.get(2).set(4, '.');
-			} else if (boxPos == midLeft){
+			} else if (boxPos == midLeft) {
 				map.get(3).set(2, '.');
-			} else if (boxPos == midRight){
+			} else if (boxPos == midRight) {
 				map.get(3).set(4, '.');
-			} else if (boxPos == botLeft){
-				if(notQuadThree == false){
+			} else if (boxPos == botLeft) {
+				if(notQuadThree == false) {
 					map.get(4).set(2, '.');
 				} else {
 					map.get(4).set(4, '.');
 				}
-			} else if (boxPos == botMid){
+			} else if (boxPos == botMid) {
 				map.get(4).set(3, '.');
-			} else if (boxPos == botRight){
+			} else if (boxPos == botRight) {
 				map.get(4).set(4, '.');
 			}
 		} else {
 			//place extra goal
-			if((extraGoalUp == true) || (rand.nextBoolean() == true)){
+			if((extraGoalUp == true) || (rand.nextBoolean() == true)) {
 				map.get(4).set(5, 'x');
 			} else {
 				map.get(5).set(4, 'x');
 			}
 			
-			System.out.println("boxPos1 =" + boxPos+" == "+ boxPos2+ "= boxPos2");
-			System.out.println("notQuadThree = " + notQuadThree + "notQuadOne = " + notQuadOne);
+			//System.out.println("boxPos1 =" + boxPos+" == "+ boxPos2+ "= boxPos2");
+			//System.out.println("notQuadThree = " + notQuadThree + "notQuadOne = " + notQuadOne);
 			
 			//place first box
-			if (boxPos == topLeft){
-				if(notQuadOne == false){
+			if (boxPos == topLeft) {
+				if(notQuadOne == false) {
 					map.get(2).set(2, '.');
 				} else { 
 					map.get(2).set(4, '.');
 				}
-			} else if (boxPos == topMid){
+			} else if (boxPos == topMid) {
 				map.get(2).set(3, '.');
-			} else if (boxPos == topRight){
+			} else if (boxPos == topRight) {
 				map.get(2).set(4, '.');
-			} else if (boxPos == midLeft){
+			} else if (boxPos == midLeft) {
 				map.get(3).set(2, '.');
-			} else if (boxPos == midRight){
+			} else if (boxPos == midRight) {
 				map.get(3).set(4, '.');
-			} else if (boxPos == botLeft){
-				if(notQuadThree == false){
+			} else if (boxPos == botLeft) {
+				if(notQuadThree == false) {
 					map.get(4).set(2, '.');
 				} else {
 					map.get(4).set(4, '.');
 				}
-			} else if (boxPos == botMid){
+			} else if (boxPos == botMid) {
 				map.get(4).set(3, '.');
-			} else if (boxPos == botRight){
+			} else if (boxPos == botRight) {
 				map.get(4).set(4, '.');
 			}
 			
 			//place second box
-			if (boxPos2 == topLeft){
-				if(notQuadOne == false){
+			if (boxPos2 == topLeft) {
+				if(notQuadOne == false) {
 					map.get(2).set(2, '.');
 				} else { 
 					map.get(2).set(4, '.');
 				}
-			} else if (boxPos2 == topMid){
+			} else if (boxPos2 == topMid) {
 				map.get(2).set(3, '.');
-			} else if (boxPos2 == topRight){
+			} else if (boxPos2 == topRight) {
 				map.get(2).set(4, '.');
-			} else if (boxPos2 == midLeft){
+			} else if (boxPos2 == midLeft) {
 				map.get(3).set(2, '.');
-			} else if (boxPos2 == midRight){
+			} else if (boxPos2 == midRight) {
 				map.get(3).set(4, '.');
-			} else if (boxPos2 == botLeft){
-				if(notQuadThree == false){
+			} else if (boxPos2 == botLeft) {
+				if(notQuadThree == false) {
 					map.get(4).set(2, '.');
 				} else {
 					map.get(4).set(4, '.');
 				}
-			} else if (boxPos2 == botMid){
+			} else if (boxPos2 == botMid) {
 				map.get(4).set(3, '.');
-			} else if (boxPos2 == botRight){
+			} else if (boxPos2 == botRight) {
 				map.get(4).set(4, '.');
 			}
 		}
 		
 	}
 
-	/**
-	 * Initialises map
-	 * @param x, size of x direction
-	 * @param y, size of y direction
-	 */
-	private void initMap(int x, int y) {
-		ArrayList<Character> row;
-		int i = 0;
-		int j = 0;
-		
-		for (i = 0; i < y; i++){
-			row = new ArrayList<Character>();
-			for (j = 0; j < x; j++){
-				row.add('|');
-			}
-			map.add(row);
-		}
-	}
-	
 	/**
 	 * Initialises map
 	 * @param size, size of square map
@@ -315,12 +317,12 @@ public class MapGenerator implements MapInterface{
 	/**
 	 * TODO delete
 	 */
-	public void printBoard() {
+	/**public void printBoard() {
 		int i = 0;
 		
 		System.out.print("  ");
 		for(ArrayList<Character> b : map) {
-			if (i > 9){
+			if (i > 9) {
 				System.out.print(i);
 			} else {
 				System.out.print(" " + i);
@@ -331,7 +333,7 @@ public class MapGenerator implements MapInterface{
 		
 		i = 0;
 		for(ArrayList<Character> a : map) {
-			if (i > 9){
+			if (i > 9) {
 				System.out.print(i);
 			} else {
 				System.out.print(" " + i);
@@ -342,7 +344,7 @@ public class MapGenerator implements MapInterface{
 			}
 			System.out.println();
 		}
-	}
+	}**/
 	
 	/**
 	 * Initialise the position guide for box two
@@ -392,13 +394,21 @@ public class MapGenerator implements MapInterface{
 		box2Pos.add(list);
 	}
 	
+	/**
+	 * Gets the boardSize.
+	 * @return board size.
+	 */
 	@Override
 	public int getBoardSize() {
 		return boardSize;
 	}
-	
+
+	/**
+	 * Gets character position.
+	 * @return character position.
+	 */
 	@Override
-	public Position getInitialCharPos(){
+	public Position getInitialCharPos() {
 		return intialCharPos;
 	}
 }

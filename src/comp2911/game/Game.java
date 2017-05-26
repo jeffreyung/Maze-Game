@@ -130,6 +130,7 @@ public class Game {
 		}, 1, TimeUnit.SECONDS);
 	}
 	
+	
 	/**
 	 * Called when the game is to be restarted
 	 * @param gamePanel is the user interface of the player.
@@ -139,6 +140,8 @@ public class Game {
 		this.gameEngine.clearBoardMap();
 		this.gameEngine.generateBoard(level);
 		board = copyBoard(gameEngine.getBoard(level));
+		this.height = board.size();
+		this.width = board.size();
 		player.setGameOver(false);
 		this.gameUpdate.initNewGame(getBoard(), getWidth(), getHeight());
 		player.setPosition(this.gameEngine.getMapGenerator().getInitialCharPos().clone());
@@ -209,8 +212,7 @@ public class Game {
 				player.setStandingOnGoal(tileType == 'x');
 				playerPos.moveUp();
 				this.interact = true;
-			} else
-				this.getBoard().get(playerPos.getY()).set(playerPos.getX(), '0');
+			}
 			break;
 		case DOWN:
 			tileType = getTileType(playerPos.getX(), playerPos.getY() + 1);
@@ -220,8 +222,7 @@ public class Game {
 				player.setStandingOnGoal(tileType == 'x');
 				playerPos.moveDown();
 				this.interact = true;
-			} else
-				this.getBoard().get(playerPos.getY()).set(playerPos.getX(), '1');
+			}
 			break;
 		case LEFT:
 			tileType = getTileType(playerPos.getX() - 1, playerPos.getY());
@@ -231,8 +232,7 @@ public class Game {
 				player.setStandingOnGoal(tileType == 'x');
 				playerPos.moveLeft();
 				this.interact = true;
-			} else
-				this.getBoard().get(playerPos.getY()).set(playerPos.getX(), '2');
+			}
 			break;
 		case RIGHT:
 			tileType = getTileType(playerPos.getX() + 1, playerPos.getY());
@@ -242,8 +242,7 @@ public class Game {
 				player.setStandingOnGoal(tileType == 'x');
 				playerPos.moveRight();
 				this.interact = true;
-			} else
-				this.getBoard().get(playerPos.getY()).set(playerPos.getX(), '3');
+			}
 			break;
 		}
 	}

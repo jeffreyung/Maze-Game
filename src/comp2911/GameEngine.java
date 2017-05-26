@@ -36,7 +36,6 @@ public class GameEngine {
 	 * The game engine constructor.
 	 */
 	public GameEngine(List<Game> games) {
-		this.mapGenerator = new MapGeneratorMVP();
 		this.boardMap = new HashMap<Integer, ArrayList<ArrayList<Character>>>();
 		this.games = games;
 	}
@@ -45,16 +44,13 @@ public class GameEngine {
 	 * @return the player who completed the most board.
 	 */
 	public Player getWinner() {
-		int max = 0;
-		Player winner = games.get(0).getPlayer();
-		for (Game game : games) {
-			if (game.getPlayer().getScore() > max) {
-				max = game.getPlayer().getScore();
-				winner = game.getPlayer();
-			} else if (game.getPlayer().getScore() == max)
-				return null;
-		}
-		return max == 0 ? null : winner;
+		Player p1 = games.get(0).getPlayer();
+		Player p2 = games.get(1).getPlayer();
+		if (p1.getScore() > p2.getScore())
+			return p1;
+		else if (p1.getScore() < p2.getScore())
+			return p2;
+		return null;
 	}
 	
 	/**
@@ -64,6 +60,8 @@ public class GameEngine {
 	public void generateBoard(int level) {
 		if (this.boardMap.containsKey(level))
 			return;
+		if (level == 1)
+			this.mapGenerator = new MapGeneratorMVP();
 		if (level == 3)
 			this.mapGenerator = new MapGenerator();
 		if (level == 7)

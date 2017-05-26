@@ -1,6 +1,7 @@
 package comp2911.gui.panel;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -51,6 +52,8 @@ public class PausePanel extends JPanel {
 	private void init() {
 		JButton button1 = new JButton("Return to game");
 		JButton button2 = new JButton("Return to main menu");
+		button1.setFont(new Font("Arial", Font.PLAIN, 30));
+		button2.setFont(new Font("Arial", Font.PLAIN, 30));
 		JPanel subPanel = new JPanel(new GridLayout(2, 0, 0, 50));
 		Image image1 = Toolkit.getDefaultToolkit().getImage("./data/img/button_1.png");
 		Image image2 = Toolkit.getDefaultToolkit().getImage("./data/img/button_2.png");

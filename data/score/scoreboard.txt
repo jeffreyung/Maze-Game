@@ -1,2 +1,2 @@
-25	default_1
-7	default_2
+30	default_1
+6	default_2

@@ -113,10 +113,12 @@ public class GamePanel extends JPanel {
 			this.swingUI.setPreferredSize(new Dimension(SwingUI.DEFAULT_WIDTH * 2, SwingUI.DEFAULT_HEIGHT));
 		this.setFocusable(true);
 		this.requestFocusInWindow();
-		this.setBackground(Color.BLACK);
+		this.setBackground(Color.DARK_GRAY);
 		this.swingUI.requestFocusInWindow();
 		this.setVisible(true);
 		try {
+			this.attribute.put('|', ImageIO.read(new File(Constants.IMAGES_DIR + "/tile_1.png")));
+			this.attribute.put('-', ImageIO.read(new File(Constants.IMAGES_DIR + "/tile_2.png")));
 			this.attribute.put('0', ImageIO.read(new File(Constants.IMAGES_DIR + "/c_up.png")));
 			this.attribute.put('1', ImageIO.read(new File(Constants.IMAGES_DIR + "/c_down.png")));
 			this.attribute.put('2', ImageIO.read(new File(Constants.IMAGES_DIR + "/c_left.png")));
@@ -141,32 +143,14 @@ public class GamePanel extends JPanel {
 			for(int y = 0; y < height; y++) {
 				Rectangle rectangle = new Rectangle(x * tileSize, y * tileSize, tileSize - 2, tileSize - 2);
 				char type = this.game.getBoard().get(y).get(x);
-				if(this.attribute.containsKey(type))
-					this.tiles.add(new Tile(getColor(type), this.attribute.get(type), rectangle));
-				else
-					this.tiles.add(new Tile(getColor(type), null, rectangle));
+				if(this.attribute.containsKey(type)) {
+					if (type == '|' && x % 2 == 0)
+						type = '-';
+					this.tiles.add(new Tile(Color.DARK_GRAY, this.attribute.get(type), rectangle));
+				} else
+					this.tiles.add(new Tile(Color.DARK_GRAY, null, rectangle));
 			}
 		}
-	}
-	
-	/**
-	 * Gets the color of the given axis.
-	 * @param type the type of the character.
-	 * @return the color of the corresponding coordinates.
-	 * | - wall
-	 * x - goal
-	 * o - empty space
-	 * . - box
-	 * : - box in goal
-	 * c - character
-	 * b - bomb
-	 */
-	public Color getColor(char type) {
-		switch(type) {
-		case '|':
-			return Color.BLACK;
-		}
-		return Color.DARK_GRAY;
 	}
 	
 	/**

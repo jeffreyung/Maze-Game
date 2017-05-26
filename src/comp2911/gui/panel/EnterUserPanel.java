@@ -2,6 +2,7 @@ package comp2911.gui.panel;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -58,6 +59,8 @@ public class EnterUserPanel extends JPanel {
 		this.username2 = new JTextField();
 		this.enter = new JButton("Enter");
 		this.exit = new JButton("Return to main menu");
+		enter.setFont(new Font("Arial", Font.PLAIN, 15));
+		exit.setFont(new Font("Arial", Font.PLAIN, 15));
 		this.setBackground(SwingUI.DEFAULT_COLOR);
 		if (swingUI.getGameMode() == 0)
 			this.initOnePlayer();
