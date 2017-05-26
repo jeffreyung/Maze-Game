@@ -36,11 +36,7 @@ public class GameEngine {
 	 * The game engine constructor.
 	 */
 	public GameEngine(List<Game> games) {
-<<<<<<< HEAD
 		this.mapGenerator = new MapGeneratorMVP();
-=======
-		this.mapGenerator = new MapGeneratorHard();
->>>>>>> 85fc4714802550b88702959974706c47536b6be3
 		this.boardMap = new HashMap<Integer, ArrayList<ArrayList<Character>>>();
 		this.games = games;
 	}
@@ -68,15 +64,9 @@ public class GameEngine {
 	public void generateBoard(int level) {
 		if (this.boardMap.containsKey(level))
 			return;
-<<<<<<< HEAD
 		if (level == 3)
 			this.mapGenerator = new MapGenerator();
 		if (level == 7)
-=======
-		//if (level == 3)
-			//this.mapGenerator = new MapGenerator();
-		//if (level == 6)
->>>>>>> 85fc4714802550b88702959974706c47536b6be3
 			this.mapGenerator = new MapGeneratorHard();
 		ArrayList<ArrayList<Character>> board = this.mapGenerator.createBoard();
 		this.boardMap.put(level, board);

@@ -30,7 +30,7 @@ public class RulesPanel extends JPanel {
 	public RulesPanel(SwingUI swingUI) {
 		this.swingUI = swingUI;
 		this.setBackground(SwingUI.DEFAULT_COLOR);
-		swingUI.setPreferredSize(new Dimension(800, 850));
+		swingUI.setPreferredSize(new Dimension(800, 900));
 		this.init();
 	}
 	

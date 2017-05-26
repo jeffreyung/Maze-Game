@@ -1,15 +1,21 @@
 package comp2911.gui.panel;
 
 import java.awt.BorderLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import comp2911.Constants;
 import comp2911.gui.SwingUI;
@@ -91,9 +97,34 @@ public class StartPanel extends JPanel {
 	 */
 	private void addButton(String name, String command) {
 		JButton button = new JButton();
+		Image image1 = Toolkit.getDefaultToolkit().getImage("./data/img/button_1.png");
+		Image image2 = Toolkit.getDefaultToolkit().getImage("./data/img/button_2.png");
+		Image newimg1 = image1.getScaledInstance(420, 100, Image.SCALE_SMOOTH);
+		Image newimg2 = image2.getScaledInstance(420, 100, Image.SCALE_SMOOTH);
+		ImageIcon imgIcon1 = new ImageIcon(newimg1);
+		ImageIcon imgIcon2 = new ImageIcon(newimg2);
 		button.setText(name);
 		button.setActionCommand(command);
 		this.add(button);
+		button.setIcon(imgIcon1);
+		button.setHorizontalTextPosition(SwingConstants.CENTER);
+		button.setBorderPainted(false);
+		button.addMouseListener(new MouseListener() {			
+			@Override
+			public void mouseReleased(MouseEvent arg0) {}		   
+			@Override
+			public void mousePressed(MouseEvent arg0) {}			
+			@Override
+			public void mouseExited(MouseEvent arg0) { 
+				button.setIcon(imgIcon1);
+			}		   
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				button.setIcon(imgIcon2);
+			}		   
+			@Override
+			public void mouseClicked(MouseEvent arg0) {}
+		});
 		this.buttons.add(button);
 	}
 }
