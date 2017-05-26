@@ -17,6 +17,7 @@ public class MapGeneratorMVP implements MapInterface{
 	public ArrayList<ArrayList<Character>> createBoard() {
 		int size = 7;
 		boardSize = size;
+		map.clear();
 		initMap(size);
 		
 		for(int i = 0; i < size; i++) {
@@ -30,7 +31,7 @@ public class MapGeneratorMVP implements MapInterface{
 		setBox();
 		
 		map.get(3).set(3, '|');
-		map.get(1).set(1, 'c');
+		map.get(1).set(1, '1');
 		intialCharPos = new Position(1,1);
 		map.get(5).set(5, 'x');
 		

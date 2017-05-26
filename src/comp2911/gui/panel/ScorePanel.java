@@ -1,9 +1,9 @@
 package comp2911.gui.panel;
 
-import java.awt.Color;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import comp2911.gui.SwingUI;
 
 /**
  * @author Jeffrey Ung
@@ -21,7 +21,7 @@ public class ScorePanel extends JPanel {
 	 */
 	public ScorePanel() {
 		this.label = new JLabel();
-		this.setBackground(Color.BLACK);
+		this.setBackground(SwingUI.DEFAULT_COLOR);
 		this.add(label);
 	}
 	

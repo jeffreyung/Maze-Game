@@ -7,7 +7,6 @@ import comp2911.game.ScoreHandler;
 import comp2911.gui.SwingUI;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.PriorityQueue;
@@ -38,7 +37,7 @@ public class ScoreBoardPanel extends JPanel {
 	public ScoreBoardPanel(SwingUI swingUI) {
 		this.swingUI = swingUI;
 		this.score = new ScoreHandler();
-		this.setBackground(Color.BLACK);
+		this.setBackground(SwingUI.DEFAULT_COLOR);
 		this.score.readScoreData();
 		this.init();
 	}

@@ -5,9 +5,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.UIManager;
 
 import comp2911.Constants;
 import comp2911.gui.panel.ScorePanel;
@@ -18,16 +21,21 @@ import comp2911.gui.panel.StartPanel;
  */
 @SuppressWarnings("serial")
 public class SwingUI extends JFrame {
-
+	
 	/**
 	 * The default width.
 	 */
-	public static int DEFAULT_WIDTH = 600;
+	public final static int DEFAULT_WIDTH = 600;
 	
 	/**
 	 * The default height.
 	 */
-	public static int DEFAULT_HEIGHT = 600;
+	public final static int DEFAULT_HEIGHT = 600;
+	
+	/**
+	 * The default color.
+	 */
+	public final static Color DEFAULT_COLOR = Color.decode("0x404040");
 	
 	/**
 	 * The menu panel.
@@ -94,7 +102,7 @@ public class SwingUI extends JFrame {
 	public void init() {
 		try {
 			JPopupMenu.setDefaultLightWeightPopupEnabled(false);
-			JFrame.setDefaultLookAndFeelDecorated(true);
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			this.setLayout(new BorderLayout());
 			this.setTitle(Constants.GAME_NAME);
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -102,12 +110,13 @@ public class SwingUI extends JFrame {
 			this.getPanel().setLayout(new GridLayout(4, 0, 0, 20));
 			this.scorePanel.setPreferredSize(new Dimension(100, 100));
 			this.rightPanel.setPreferredSize(new Dimension(100, 100));
-			this.topPanel.setPreferredSize(new Dimension(50, 50));
+			this.topPanel.setPreferredSize(new Dimension(50, 100));
 			this.botPanel.setPreferredSize(new Dimension(50, 50));
-			this.scorePanel.setBackground(Color.BLACK);
-			this.rightPanel.setBackground(Color.BLACK);
-			this.topPanel.setBackground(Color.BLACK);
-			this.botPanel.setBackground(Color.BLACK);
+			this.scorePanel.setBackground(SwingUI.DEFAULT_COLOR);
+			this.rightPanel.setBackground(SwingUI.DEFAULT_COLOR);
+			this.topPanel.setBackground(SwingUI.DEFAULT_COLOR);
+			this.botPanel.setBackground(SwingUI.DEFAULT_COLOR);
+			this.topPanel.add(new JLabel(new ImageIcon("./data/img/logo.png")));
 			this.add(scorePanel, BorderLayout.WEST);
 			this.add(rightPanel, BorderLayout.EAST);
 			this.add(topPanel, BorderLayout.NORTH);
@@ -218,5 +227,5 @@ public class SwingUI extends JFrame {
 	public void setReturnPanel(JPanel returnPanel) {
 		this.returnPanel = returnPanel;
 	}
-
+	
 }

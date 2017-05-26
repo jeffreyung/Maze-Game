@@ -1,7 +1,6 @@
 package comp2911.gui.panel;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,7 +35,7 @@ public class PausePanel extends JPanel {
 		this.setLayout(new BorderLayout());
 		this.swingUI = swingUI;
 		this.gamePanel = gamePanel;
-		this.setBackground(Color.BLACK);
+		this.setBackground(SwingUI.DEFAULT_COLOR);
 		this.init();
 	}
 	
@@ -59,7 +58,7 @@ public class PausePanel extends JPanel {
 				swingUI.switchPanel(swingUI.getStartPanel());
 			}
 		});
-		subPanel.setBackground(Color.BLACK);
+		subPanel.setBackground(SwingUI.DEFAULT_COLOR);
 		subPanel.add(button1);
 		subPanel.add(button2);
 		this.add(subPanel);

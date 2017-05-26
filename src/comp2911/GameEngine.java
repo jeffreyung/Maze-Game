@@ -7,6 +7,8 @@ import java.util.Map;
 
 import comp2911.game.Game;
 import comp2911.game.MapGenerator;
+import comp2911.game.MapGeneratorHard;
+import comp2911.game.MapGeneratorMVP;
 import comp2911.game.MapInterface;
 import comp2911.game.Player;
 
@@ -34,7 +36,7 @@ public class GameEngine {
 	 * The game engine constructor.
 	 */
 	public GameEngine(List<Game> games) {
-		this.mapGenerator = new MapGenerator();
+		this.mapGenerator = new MapGeneratorMVP();
 		this.boardMap = new HashMap<Integer, ArrayList<ArrayList<Character>>>();
 		this.games = games;
 	}
@@ -43,16 +45,18 @@ public class GameEngine {
 	 * @return the player who completed the most board.
 	 */
 	public Player getWinner() {
-		int max = 1;
+		int max = 0;
 		Player winner = games.get(0).getPlayer();
 		for (Game game : games) {
-			if (game.getLevel() > max) {
-				max = game.getLevel() + game.getPlayer().getScore();
+			if (game.getPlayer().getScore() > max) {
+				max = game.getPlayer().getScore();
 				winner = game.getPlayer();
-			}
+			} else if (game.getPlayer().getScore() == max)
+				return null;
 		}
-		return max == 1 ? null : winner;
+		return max == 0 ? null : winner;
 	}
+	
 	/**
 	 * Generates a new board for a given level
 	 * @param level of the game.
@@ -60,6 +64,10 @@ public class GameEngine {
 	public void generateBoard(int level) {
 		if (this.boardMap.containsKey(level))
 			return;
+		if (level == 3)
+			this.mapGenerator = new MapGenerator();
+		if (level == 7)
+			this.mapGenerator = new MapGeneratorHard();
 		ArrayList<ArrayList<Character>> board = this.mapGenerator.createBoard();
 		this.boardMap.put(level, board);
 	}

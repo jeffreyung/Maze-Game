@@ -1,7 +1,6 @@
 package comp2911.gui.panel;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,7 +29,7 @@ public class RulesPanel extends JPanel {
 	 */
 	public RulesPanel(SwingUI swingUI) {
 		this.swingUI = swingUI;
-		this.setBackground(Color.BLACK);
+		this.setBackground(SwingUI.DEFAULT_COLOR);
 		swingUI.setPreferredSize(new Dimension(800, 850));
 		this.init();
 	}

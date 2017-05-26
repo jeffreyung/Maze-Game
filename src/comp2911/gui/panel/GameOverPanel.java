@@ -1,7 +1,6 @@
 package comp2911.gui.panel;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,7 +35,7 @@ public class GameOverPanel extends JPanel {
 		this.setLayout(new BorderLayout());
 		this.swingUI = swingUI;
 		this.gamePanel = gamePanel;
-		this.setBackground(Color.BLACK);
+		this.setBackground(SwingUI.DEFAULT_COLOR);
 	}
 	
 	/**
@@ -61,7 +60,7 @@ public class GameOverPanel extends JPanel {
 				swingUI.switchPanel(swingUI.getStartPanel());
 			}
 		});
-		subPanel.setBackground(Color.BLACK);
+		subPanel.setBackground(SwingUI.DEFAULT_COLOR);
 		subPanel.add(text);
 		if (swingUI.getGameMode() == 0)
 			subPanel.add(button1);

@@ -1,7 +1,6 @@
 package comp2911.gui.panel;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -39,7 +38,7 @@ public class StartPanel extends JPanel {
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		buttons = new ArrayList<JButton>();
 		this.setLayout(new BorderLayout());
-		this.setBackground(Color.BLACK);
+		this.setBackground(SwingUI.DEFAULT_COLOR);
 		init();
 	}
 

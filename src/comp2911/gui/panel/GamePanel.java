@@ -107,7 +107,7 @@ public class GamePanel extends JPanel {
 		this.addKeyListener(this.userInput);
 		this.swingUI.addKeyListener(this.userInput);
 		this.swingUI.setGameStart(true);
-		if (this.swingUI.getGameMode() == 0)
+		if(this.swingUI.getGameMode() == 0)
 			this.swingUI.setPreferredSize(new Dimension(SwingUI.DEFAULT_WIDTH, SwingUI.DEFAULT_HEIGHT));
 		else
 			this.swingUI.setPreferredSize(new Dimension(SwingUI.DEFAULT_WIDTH * 2, SwingUI.DEFAULT_HEIGHT));
@@ -117,12 +117,14 @@ public class GamePanel extends JPanel {
 		this.swingUI.requestFocusInWindow();
 		this.setVisible(true);
 		try {
-			this.attribute.put('c', ImageIO.read(new File(Constants.IMAGES_DIR + "/player.gif")));
+			this.attribute.put('0', ImageIO.read(new File(Constants.IMAGES_DIR + "/c_up.png")));
+			this.attribute.put('1', ImageIO.read(new File(Constants.IMAGES_DIR + "/c_down.png")));
+			this.attribute.put('2', ImageIO.read(new File(Constants.IMAGES_DIR + "/c_left.png")));
+			this.attribute.put('3', ImageIO.read(new File(Constants.IMAGES_DIR + "/c_right.png")));
 			this.attribute.put('.', ImageIO.read(new File(Constants.IMAGES_DIR + "/crate_1.gif")));
 			this.attribute.put(':', ImageIO.read(new File(Constants.IMAGES_DIR + "/crate_2.gif")));
 			this.attribute.put('x', ImageIO.read(new File(Constants.IMAGES_DIR + "/goal.gif")));
-			this.attribute.put(' ', ImageIO.read(new File(Constants.IMAGES_DIR + "/tile.gif")));
-		} catch (IOException e) {
+		} catch(IOException e) {
 		}
 	}
 	
@@ -133,13 +135,13 @@ public class GamePanel extends JPanel {
 	 * @param tileSize is the size of each tile.
 	 */
 	public void createTiles(int width, int height, int tileSize) {
-		if (!tiles.isEmpty())
+		if(!tiles.isEmpty())
 			return;
-		for (int x = 0; x < width; x++) {
-			for (int y = 0; y < height; y++) {
+		for(int x = 0; x < width; x++) {
+			for(int y = 0; y < height; y++) {
 				Rectangle rectangle = new Rectangle(x * tileSize, y * tileSize, tileSize - 2, tileSize - 2);
 				char type = this.game.getBoard().get(y).get(x);
-				if (this.attribute.containsKey(type))
+				if(this.attribute.containsKey(type))
 					this.tiles.add(new Tile(getColor(type), this.attribute.get(type), rectangle));
 				else
 					this.tiles.add(new Tile(getColor(type), null, rectangle));
@@ -160,10 +162,8 @@ public class GamePanel extends JPanel {
 	 * b - bomb
 	 */
 	public Color getColor(char type) {
-		switch (type) {
+		switch(type) {
 		case '|':
-			return Color.BLACK;
-		case 't':
 			return Color.BLACK;
 		}
 		return Color.DARK_GRAY;
@@ -175,11 +175,11 @@ public class GamePanel extends JPanel {
 	 */
 	@Override
 	protected void paintComponent(Graphics g) {
-		if (game.isPause()) {
-			if (!this.swingUI.getPanel().equals(this.pausePanel))
+		if(game.isPause()) {
+			if(!this.swingUI.getPanel().equals(this.pausePanel))
 				this.swingUI.switchPanel(this.pausePanel);
 			return;
-		} else if (game.isGameOver()) {
+		} else if(game.isGameOver()) {
 			this.gameOverPanel.init();
 			this.swingUI.switchPanel(this.gameOverPanel);
 			return;
@@ -189,12 +189,12 @@ public class GamePanel extends JPanel {
 		final int height = game.getHeight();
 		final int tileSize = Constants.TILE_SIZE;
 		this.createTiles(width, height, tileSize);
-		Graphics2D g2d = (Graphics2D) g.create();
-		for (Tile tile : tiles) {
+		Graphics2D g2d =(Graphics2D) g.create();
+		for(Tile tile : tiles) {
 			g2d.setColor(tile.color);
 			g2d.fill(tile.shape);
 			g2d.draw(tile.shape);
-			if (tile.image != null)
+			if(tile.image != null)
 				g2d.drawImage(tile.image, tile.shape.getBounds().x, tile.shape.getBounds().y, this);
 		}
 		g2d.dispose();
