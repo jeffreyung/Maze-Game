@@ -2,12 +2,18 @@ package comp2911.gui.panel;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import comp2911.gui.SwingUI;
 
@@ -45,6 +51,12 @@ public class GameOptionPanel extends JPanel {
 	 * Initializes the enter user panel.
 	 */
 	public void init() {
+		Image image1 = Toolkit.getDefaultToolkit().getImage("./data/img/button_1.png");
+		Image image2 = Toolkit.getDefaultToolkit().getImage("./data/img/button_2.png");
+		Image newimg1 = image1.getScaledInstance(420, 60, Image.SCALE_SMOOTH);
+		Image newimg2 = image2.getScaledInstance(420, 60, Image.SCALE_SMOOTH);
+		ImageIcon imgIcon1 = new ImageIcon(newimg1);
+		ImageIcon imgIcon2 = new ImageIcon(newimg2);
 		JLabel label = new JLabel("<html><b><font color=\"white\" size=\"14\">Select game mode</font><b></html>");
 		this.setLayout(new GridLayout(3, 0, 0, 20));
 		swingUI.setPreferredSize(new Dimension(600, 400));
@@ -62,6 +74,44 @@ public class GameOptionPanel extends JPanel {
 				swingUI.switchPanel(new EnterUserPanel(swingUI));
 			}
 		});
+		onePlayer.addMouseListener(new MouseListener() {			
+			@Override
+			public void mouseReleased(MouseEvent arg0) {}		   
+			@Override
+			public void mousePressed(MouseEvent arg0) {}			
+			@Override
+			public void mouseExited(MouseEvent arg0) { 
+				onePlayer.setIcon(imgIcon1);
+			}		   
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				onePlayer.setIcon(imgIcon2);
+			}		   
+			@Override
+			public void mouseClicked(MouseEvent arg0) {}
+		});
+		twoPlayer.addMouseListener(new MouseListener() {			
+			@Override
+			public void mouseReleased(MouseEvent arg0) {}		   
+			@Override
+			public void mousePressed(MouseEvent arg0) {}			
+			@Override
+			public void mouseExited(MouseEvent arg0) { 
+				twoPlayer.setIcon(imgIcon1);
+			}		   
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				twoPlayer.setIcon(imgIcon2);
+			}		   
+			@Override
+			public void mouseClicked(MouseEvent arg0) {}
+		});
+		onePlayer.setIcon(new ImageIcon(newimg1));
+		twoPlayer.setIcon(new ImageIcon(newimg1));
+		onePlayer.setHorizontalTextPosition(SwingConstants.CENTER);
+		twoPlayer.setHorizontalTextPosition(SwingConstants.CENTER);
+		onePlayer.setBorderPainted(false);
+		twoPlayer.setBorderPainted(false);
 		this.add(label);
 		this.add(this.onePlayer);
 		this.add(this.twoPlayer);
