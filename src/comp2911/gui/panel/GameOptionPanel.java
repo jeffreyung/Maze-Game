@@ -97,11 +97,11 @@ public class GameOptionPanel extends JPanel {
 			public void mousePressed(MouseEvent arg0) {}			
 			@Override
 			public void mouseExited(MouseEvent arg0) { 
-				onePlayer.setIcon(imgIcon1);
+				twoPlayer.setIcon(imgIcon1);
 			}		   
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
-				onePlayer.setIcon(imgIcon2);
+				twoPlayer.setIcon(imgIcon2);
 			}		   
 			@Override
 			public void mouseClicked(MouseEvent arg0) {}
