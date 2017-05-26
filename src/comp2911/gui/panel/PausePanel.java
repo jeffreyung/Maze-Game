@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import comp2911.Game;
+import comp2911.game.Game;
 import comp2911.gui.SwingUI;
 
 /**

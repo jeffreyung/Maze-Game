@@ -19,8 +19,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import comp2911.Constants;
-import comp2911.Game;
 import comp2911.GameEngine;
+import comp2911.game.Game;
 import comp2911.gui.SwingUI;
 import comp2911.gui.UserInput;
 
@@ -217,7 +217,7 @@ public class GamePanel extends JPanel {
 	}
 	
 	/**
-	 * The game .
+	 * The game.
 	 */
 	public Game getGame() {
 		return game;

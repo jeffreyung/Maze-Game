@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import comp2911.game.Game;
 import comp2911.game.MapGenerator;
 import comp2911.game.MapInterface;
 import comp2911.game.Player;
@@ -61,6 +62,13 @@ public class GameEngine {
 			return;
 		ArrayList<ArrayList<Character>> board = this.mapGenerator.createBoard();
 		this.boardMap.put(level, board);
+	}
+	
+	/**
+	 * Clears the board map.
+	 */
+	public void clearBoardMap() {
+		this.boardMap.clear();
 	}
 	
 	/**
